@@ -856,7 +856,7 @@
 </style>
 <script>
 (function () {
-  var KEY = "fund-assist-claim-v15-gate";
+  var KEY = "fund-assist-claim-v152-gate";
   var local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   try { if (local || sessionStorage.getItem(KEY) === "1") document.documentElement.classList.add("gate-ok"); } catch (e) {}
 })();
@@ -873,7 +873,7 @@
 <script>
 (function () {
   var HASH = "d11e02d5f08a59bd64ad1e8040eff2f79171b34a87cc9adc94ce6b20b02206f5";
-  var KEY = "fund-assist-claim-v15-gate";
+  var KEY = "fund-assist-claim-v152-gate";
   function unlock() {
     document.documentElement.classList.add("gate-ok");
     var gate = document.getElementById("gate");
@@ -904,9 +904,13 @@
         <button class="menu-item active" data-view="audit">转账审核</button>
         <button class="menu-item" data-view="biz">收款明细</button>
         <button class="menu-item" data-view="track">预充追踪</button>
+        <button class="menu-item" data-view="manage">预充管理</button>
+        <div class="menu-group">飞书审批</div>
+        <button class="menu-item" data-view="lark-single">代发预充（单笔）</button>
+        <button class="menu-item" data-view="lark-batch">代发预充（批量）</button>
       </nav>
       <div class="menu-foot">
-        <div class="ver">v1.5.1</div>
+        <div class="ver">v1.5.2</div>
       </div>
     </aside>
     <div class="main">
@@ -942,7 +946,7 @@ const FX_USD = { USD: 1, EUR: 0.919876, GBP: 0.784512, HKD: 7.781234, CNY: 7.123
 const PLATFORMS = ["Wise", "Airwallex", "Payoneer", "Worldfirst", "PingPong", "Others", "HSBC USD (Swift)", "Bank Wise EUR (SEPA)"];
 
 const qView = new URLSearchParams(location.search).get("view");
-let view = ["biz", "audit", "track"].includes(qView) ? qView : "audit";
+let view = ["biz", "audit", "track", "manage", "lark-single", "lark-batch"].includes(qView) ? qView : "audit";
 let bizPlatform = "Airwallex";
 let finStatusFilter = "unclaimed";
 let bizStatusFilter = "all";
@@ -1609,15 +1613,19 @@ function counts() {
 }
 
 function render() {
-  document.querySelector(".shell").classList.toggle("audit-mode", view === "audit");
-  document.querySelector(".shell").classList.toggle("track-mode", view === "track");
+  const iframeView = view === "audit" || view === "track" || view === "manage" || view === "lark-single" || view === "lark-batch";
+  document.querySelector(".shell").classList.toggle("audit-mode", iframeView && view !== "track" && view !== "manage");
+  document.querySelector(".shell").classList.toggle("track-mode", view === "track" || view === "manage");
   document.querySelectorAll(".menu-item").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.view === view);
   });
   document.querySelector(".avatar").textContent = view === "fin" ? "财" : "业";
   if (view === "audit") renderAudit();
+  else if (view === "lark-single") renderLarkApproval("single");
+  else if (view === "lark-batch") renderLarkApproval("batch");
   else if (view === "fin") renderFin();
   else if (view === "track") renderTrack();
+  else if (view === "manage") renderManage();
   else renderBiz();
 }
 
@@ -1824,11 +1832,19 @@ function renderBiz() {
 }
 
 function renderAudit() {
-  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v166" title="转账审核"></iframe>';
+  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v195" title="转账审核"></iframe>';
+}
+
+function renderLarkApproval(mode) {
+  const title = mode === "batch" ? "代发预充申请（批量）" : "代发预充申请（单笔）";
+  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v195&lark=' + encodeURIComponent(mode) + '" title="' + title + '"></iframe>';
 }
 
 function renderTrack() {
   $("app").innerHTML = '<iframe class="audit-frame" src="prepaid-track.html?embed=1&v=11" title="预充追踪"></iframe>';
+}
+function renderManage() {
+  $("app").innerHTML = '<iframe class="audit-frame" src="prepaid-manage.html?embed=1&v=7" title="预充管理"></iframe>';
 }
 
 function renderFin() {

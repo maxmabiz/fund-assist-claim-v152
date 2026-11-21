@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fund · 预充管理</title>
+<style>
+  :root {
+    --primary: #1677ff;
+    --primary-hover: #4096ff;
+    --text: rgba(0, 0, 0, .88);
+    --text-2: rgba(0, 0, 0, .65);
+    --text-3: rgba(0, 0, 0, .45);
+    --text-4: rgba(0, 0, 0, .25);
+    --border: #d9d9d9;
+    --split: #f0f0f0;
+    --success: #52c41a;
+    --danger: #ff4d4f;
+    --header-h: 48px;
+    --tab-h: 40px;
+    --font: 13px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: var(--font);
+    color: var(--text);
+    background: #f0f2f5;
+    overflow: hidden;
+  }
+  button, input, select, textarea { font-family: inherit; font-size: inherit; }
+  button { cursor: pointer; }
+
+  .app { height: 100vh; display: flex; flex-direction: column; min-width: 1280px; }
+
+  .topbar {
+    height: var(--header-h);
+    background: #fff;
+    border-bottom: 1px solid var(--split);
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 20px;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .logo {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: var(--primary); color: #fff;
+    display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-2);
+  }
+  .crumb .app-name { color: var(--text); font-weight: 600; }
+  .crumb .sep { color: var(--text-4); }
+  .crumb .current { color: var(--text); }
+  .top-spacer { flex: 1; }
+  .icon-btn {
+    width: 32px; height: 32px; border: 0; background: transparent;
+    border-radius: 6px; color: var(--text-2); display: grid; place-items: center;
+  }
+  .icon-btn:hover { background: rgba(0,0,0,.04); color: var(--text); }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    display: grid; place-items: center; font-weight: 500;
+  }
+
+  .tabbar {
+    height: var(--tab-h);
+    background: #fff;
+    border-bottom: 1px solid var(--split);
+    display: flex; align-items: flex-end;
+    padding: 0 12px; gap: 4px; flex-shrink: 0;
+  }
+  .tab {
+    height: 36px; display: flex; align-items: center; gap: 6px;
+    padding: 0 12px; color: var(--primary);
+    border: 0; border-bottom: 2px solid var(--primary);
+    background: transparent; border-radius: 0;
+  }
+  .tab .x { color: var(--text-4); font-size: 12px; line-height: 1; padding: 2px; }
+
+  .page {
+    flex: 1; min-height: 0; overflow: hidden;
+    padding: 12px 16px 8px; background: #fff;
+    display: flex; flex-direction: column;
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 240px)) 1fr;
+    gap: 8px 16px;
+    align-items: end;
+    margin-bottom: 8px;
+  }
+  .filters.more { grid-template-rows: auto auto; }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field label { color: var(--text); line-height: 22px; }
+  .field input, .field select {
+    width: 100%; height: 32px;
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 0 11px; outline: none; background: #fff; color: var(--text);
+  }
+  .field input::placeholder { color: #bfbfbf; }
+  .field input:hover, .field select:hover { border-color: var(--primary-hover); }
+  .field input:focus, .field select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(5, 145, 255, .1);
+  }
+  .filter-actions {
+    display: flex; justify-content: flex-end; gap: 8px; padding-bottom: 0;
+  }
+  .extra-filters { display: none; grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(180px, 240px)); gap: 8px 16px; }
+  .filters.more .extra-filters { display: grid; }
+
+  .btn {
+    height: 32px; padding: 0 15px; border-radius: 6px;
+    border: 1px solid var(--border); background: #fff; color: var(--text);
+    display: inline-flex; align-items: center; line-height: 1;
+  }
+  .btn:hover { color: var(--primary-hover); border-color: var(--primary-hover); }
+  .btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .btn.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); color: #fff; }
+  .btn-link {
+    border: 0; background: transparent; color: var(--primary); padding: 0; cursor: pointer;
+  }
+  .btn-link:hover { color: var(--primary-hover); }
+
+  .table-wrap { flex: 1; min-height: 0; overflow: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 1680px; }
+  th, td {
+    padding: 12px 12px; text-align: left;
+    border-bottom: 1px solid var(--split); vertical-align: middle; font-weight: 400;
+  }
+  th {
+    background: #fafafa; color: var(--text); font-weight: 600; white-space: nowrap;
+    position: sticky; top: 0; z-index: 2;
+  }
+  td { color: var(--text); }
+  tbody tr:hover td { background: #fafafa; }
+  .name { max-width: 168px; white-space: normal; line-height: 1.45; word-break: break-all; }
+  .person { max-width: 168px; white-space: normal; line-height: 1.45; word-break: break-all; }
+  .txn, .sales { max-width: 140px; white-space: normal; word-break: break-all; line-height: 1.45; font-variant-numeric: tabular-nums; }
+  .amt { color: var(--success); font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; }
+  .muted { color: var(--text-3); }
+  .col-sticky {
+    position: sticky; right: 0; background: #fff;
+    box-shadow: -8px 0 8px -8px rgba(0,0,0,.12);
+  }
+  th.col-sticky { background: #fafafa; z-index: 3; }
+  tbody tr:hover td.col-sticky { background: #fafafa; }
+  .tag {
+    display: inline-flex; align-items: center;
+    height: 22px; padding: 0 8px; border-radius: 4px;
+    font-size: 12px; line-height: 20px; border: 1px solid transparent; white-space: nowrap;
+  }
+  .tag-ok { color: #389e0d; background: #f6ffed; border-color: #b7eb8f; }
+  .tag-bad { color: #cf1322; background: #fff2f0; border-color: #ffccc7; }
+  .tag-wait { color: var(--primary); background: #e6f4ff; border-color: #91caff; }
+  .tag-done { color: var(--text-3); background: #fafafa; border-color: #d9d9d9; }
+
+  .pager {
+    display: flex; align-items: center;
+    gap: 12px; padding: 12px 0 4px; color: var(--text-2); flex-shrink: 0;
+  }
+  .pager .total { white-space: nowrap; flex-shrink: 0; }
+  .pages { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .page-size {
+    height: 32px; border: 1px solid var(--border); border-radius: 6px;
+    padding: 0 8px; background: #fff; color: var(--text);
+  }
+  .page-btn {
+    min-width: 32px; height: 32px; padding: 0 6px;
+    border: 1px solid transparent; background: transparent;
+    border-radius: 6px; color: var(--text);
+  }
+  .page-btn:hover { background: rgba(0,0,0,.04); }
+  .page-btn.on { border-color: var(--primary); color: var(--primary); font-weight: 600; }
+  .page-btn:disabled { color: var(--text-4); cursor: not-allowed; }
+
+  .mask {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex; justify-content: flex-end;
+    z-index: 20;
+  }
+  .mask[hidden] { display: none; }
+  .drawer {
+    width: min(640px, 100%);
+    height: 100%; background: #fff;
+    box-shadow: -6px 0 16px rgba(0,0,0,.08);
+    display: flex; flex-direction: column;
+  }
+  .drawer-hd, .drawer-top {
+    flex: none; display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+  }
+  .drawer-hd { border-bottom: 1px solid var(--split); }
+  .drawer-hd h2 { margin: 0; font-size: 16px; font-weight: 600; line-height: 24px; }
+  .close {
+    width: 22px; height: 22px; border: 0; background: transparent;
+    color: var(--text-3); border-radius: 4px; display: grid; place-items: center; font-size: 16px;
+  }
+  .close:hover { background: rgba(0,0,0,.06); color: var(--text); }
+  .drawer-bd { overflow: auto; padding: 0 24px 24px; }
+  .drawer-no { color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 4px;
+    border: 1px solid #91caff; color: #1677ff; background: #e6f4ff; font-size: 12px; font-style: normal; line-height: 20px;
+  }
+  .chip-line { color: #531dab; background: #f9f0ff; border-color: #d3adf7; }
+  .chip-ads { color: #d46b08; background: #fff7e6; border-color: #ffd591; }
+  .chip-ok { color: #389e0d; background: #f6ffed; border-color: #b7eb8f; }
+  .chip-bad { color: #cf1322; background: #fff2f0; border-color: #ffccc7; }
+  .block { padding: 16px 0; border-bottom: 1px solid var(--split); }
+  .block:last-child { border-bottom: 0; }
+  .block h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; }
+  .detail-grid, .sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; }
+  .detail-grid .span2 { grid-column: 1 / -1; }
+  .pair span { display: block; margin-bottom: 4px; color: var(--text-3); }
+  .pair b { font-weight: 500; }
+  .sum-card { background: #fafafa; border-radius: 6px; padding: 16px 20px; }
+  .sum-card span { color: var(--text-3); }
+  .sum-card b { display: block; margin-top: 8px; font-size: 16px; font-weight: 600; }
+  .sum-card b.warn { color: #fa8c16; }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .steps li { position: relative; padding: 0 0 18px 18px; }
+  .steps li:last-child { padding-bottom: 0; }
+  .steps li::before {
+    content: ""; position: absolute; left: 3px; top: 10px; bottom: 0; width: 1px; background: #f0f0f0;
+  }
+  .steps li:last-child::before { display: none; }
+  .steps .dot {
+    position: absolute; left: 0; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: #1677ff;
+  }
+  .steps .when { margin-top: 4px; color: var(--text-3); font-size: 12px; }
+  .remark { color: var(--text); line-height: 1.65; }
+
+  html.embed .topbar,
+  html.embed .tabbar { display: none; }
+  html.embed body { background: #fff; }
+  html.embed .app { min-width: 0; height: 100%; }
+  html.embed .page { padding: 16px 20px 8px; }
+  .page-crumb { color: var(--text-3); margin-bottom: 12px; }
+  .page-crumb b { color: var(--text); font-weight: 500; }
+  html:not(.embed) .page-crumb { display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="logo">F</div>
+    <div class="crumb">
+      <span class="app-name">fund</span>
+      <span class="sep">›</span>
+      <span>业务入账</span>
+      <span class="sep">›</span>
+      <span class="current">预充管理</span>
+    </div>
+    <div class="top-spacer"></div>
+    <button class="icon-btn" type="button" title="搜索">⌕</button>
+    <button class="icon-btn" type="button" title="主题">☾</button>
+    <div class="avatar">业</div>
+  </header>
+
+  <nav class="tabbar">
+    <button class="tab" type="button">预充管理 <span class="x">×</span></button>
+  </nav>
+
+  <main class="page">
+    <div class="page-crumb">Fund &nbsp;&gt;&nbsp; 业务入账 &nbsp;&gt;&nbsp; <b>预充管理</b></div>
+    <div class="filters" id="filters">
+      <div class="field">
+        <label>商户ID</label>
+        <input id="qId" placeholder="请输入商户ID" />
+      </div>
+      <div class="field">
+        <label>子业务</label>
+        <select id="qLine">
+          <option value="">请选择子业务</option>
+          <option>履约</option>
+          <option>广告</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>交易ID</label>
+        <input id="qTxn" placeholder="请输入交易ID" />
+      </div>
+      <div class="field">
+        <label>审批状态</label>
+        <select id="qApproval">
+          <option value="">请选择审批状态</option>
+          <option>等待审批</option>
+          <option>审批通过</option>
+          <option>审批驳回</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn primary" type="button" id="btnSearch">搜索</button>
+        <button class="btn" type="button" id="btnReset">重置</button>
+        <button class="btn" type="button" id="btnMore">展开</button>
+      </div>
+      <div class="extra-filters">
+        <div class="field">
+          <label>审批单号</label>
+          <input id="qAp" placeholder="请输入审批单号" />
+        </div>
+        <div class="field">
+          <label>预充状态</label>
+          <select id="qPre">
+            <option value="">请选择预充状态</option>
+            <option>审批中</option>
+            <option>预充成功</option>
+            <option>已完成还款</option>
+            <option>审批拒绝</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>需要审批</label>
+          <select id="qNeed">
+            <option value="">全部</option>
+            <option>是</option>
+            <option>否</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>销售单据号</label>
+          <input id="qSales" placeholder="请输入销售单据号" />
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>商户名称</th>
+            <th>子业务</th>
+            <th>交易ID</th>
+            <th>转账币种</th>
+            <th>转账金额</th>
+            <th>预充币种</th>
+            <th>预充金额</th>
+            <th>需要审批</th>
+            <th>审批单号</th>
+            <th>审批状态</th>
+            <th>预充状态</th>
+            <th>销售单据号</th>
+            <th>提交时间</th>
+            <th>提交人</th>
+            <th class="col-sticky">操作</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      <span class="total" id="totalText">共 0 条记录</span>
+      <select class="page-size" id="pageSize">
+        <option value="20" selected>20条/页</option>
+        <option value="50">50条/页</option>
+      </select>
+      <div class="pages" id="pages"></div>
+    </div>
+  </main>
+</div>
+
+<div class="mask" id="mask" hidden>
+  <aside class="drawer" role="dialog" aria-labelledby="dlgTitle">
+    <div class="drawer-hd">
+      <h2 id="dlgTitle">预充详情</h2>
+      <button class="close" type="button" id="btnClose" aria-label="关闭">×</button>
+    </div>
+    <div class="drawer-top" id="dlgTop"></div>
+    <div class="drawer-bd" id="dlgBody"></div>
+  </aside>
+</div>
+
+<script>
+if (new URLSearchParams(location.search).has("embed")) {
+  document.documentElement.classList.add("embed");
+}
+
+const PEOPLE = [
+  ["许嘉树", "xu.jiashu@harbor-demo.test"],
+  ["林知衡", "lin.zhiheng@harbor-demo.test"],
+  ["周澄川", "zhou.chengchuan@harbor-demo.test"],
+  ["苏晚宁", "su.wanning@harbor-demo.test"],
+  ["梁清和", "liang.qinghe@harbor-demo.test"],
+  ["沈知夏", "shen.zhixia@harbor-demo.test"]
+];
+const LONG = "LLYYYYYYYYYYYY请不要随便动别人账号信息谢谢配合";
+const ADS_NAMES = ["tini fong", "潮潮", "北辰广告-欧洲账户", "星辰出海-广告主账户"];
+const FULFILL_NAMES = ["禾风制造", "华贸商城-主账户", "迅达供应链-代发账户", "万里汇零售测试中", "欧港供应链-欧洲账户"];
+
+function money(n) {
+  const v = Number(n);
+  if (!isFinite(v)) return "-";
+  return v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function person(name, mail) {
+  return name + "(" + mail + ")";
+}
+function pad(n, w) {
+  return String(n).padStart(w, "0");
+}
+
+function featuredRows() {
+  return [
+    {
+      merchantId: "45811", merchantName: "禾风制造", biz: "履约",
+      txnId: "SC-BATCH-A", reviewNo: "TR-SC-BATCH-A",
+      transferCcy: "USD", transferAmt: 1860, preCcy: "USD", preAmt: 1860,
+      needApproval: true, approvalNo: "AP20261121170001",
+      approvalStatus: "等待审批", preStatus: "审批中",
+      salesNo: "21261121170001001", submitAt: "2026-11-21 17:00:12",
+      submitter: PEOPLE[0][0], submitterMail: PEOPLE[0][1],
+      prechargeNo: "PF20261121170001"
+    },
+    {
+      merchantId: "45811", merchantName: "禾风制造", biz: "履约",
+      txnId: "SC-BATCH-B", reviewNo: "TR-SC-BATCH-B",
+      transferCcy: "USD", transferAmt: 2460, preCcy: "USD", preAmt: 2400,
+      needApproval: true, approvalNo: "AP20261121170001",
+      approvalStatus: "等待审批", preStatus: "审批中",
+      salesNo: "21261121170001002", submitAt: "2026-11-21 17:00:12",
+      submitter: PEOPLE[0][0], submitterMail: PEOPLE[0][1],
+      prechargeNo: "PF20261121170002"
+    },
+    {
+      merchantId: "71008", merchantName: "华贸商城-主账户", biz: "履约",
+      txnId: "SC-HUAMAO-A", reviewNo: "TR-SC-HUAMAO-A",
+      transferCcy: "USD", transferAmt: 1280, preCcy: "USD", preAmt: 1280,
+      needApproval: true, approvalNo: "AP20261118093001",
+      approvalStatus: "审批通过", preStatus: "预充成功",
+      salesNo: "21261118093001001", submitAt: "2026-11-18 09:30:18",
+      submitter: PEOPLE[1][0], submitterMail: PEOPLE[1][1],
+      prechargeNo: "PF20261118093001"
+    },
+    {
+      merchantId: "71008", merchantName: "华贸商城-主账户", biz: "履约",
+      txnId: "SC-HUAMAO-B", reviewNo: "TR-SC-HUAMAO-B",
+      transferCcy: "USD", transferAmt: 960, preCcy: "USD", preAmt: 940,
+      needApproval: true, approvalNo: "AP20261118093001",
+      approvalStatus: "审批通过", preStatus: "预充成功",
+      salesNo: "21261118093001002", submitAt: "2026-11-18 09:30:18",
+      submitter: PEOPLE[1][0], submitterMail: PEOPLE[1][1],
+      prechargeNo: "PF20261118093002"
+    },
+    {
+      merchantId: "71008", merchantName: "华贸商城-主账户", biz: "履约",
+      txnId: "SC-HUAMAO-C", reviewNo: "TR-SC-HUAMAO-C",
+      transferCcy: "USD", transferAmt: 740, preCcy: "USD", preAmt: 740,
+      needApproval: true, approvalNo: "AP20261118093001",
+      approvalStatus: "审批通过", preStatus: "已完成还款",
+      salesNo: "21261118093001003", submitAt: "2026-11-18 09:30:18",
+      submitter: PEOPLE[1][0], submitterMail: PEOPLE[1][1],
+      prechargeNo: "PF20261118093003"
+    },
+    {
+      merchantId: "88021", merchantName: "迅达供应链-代发账户", biz: "履约",
+      txnId: "SC-XUNDA-A", reviewNo: "TR-SC-XUNDA-A",
+      transferCcy: "USD", transferAmt: 520, preCcy: "USD", preAmt: 520,
+      needApproval: true, approvalNo: "AP20261115110022",
+      approvalStatus: "审批驳回", preStatus: "审批拒绝",
+      salesNo: "21261115110022001", submitAt: "2026-11-15 11:00:44",
+      submitter: PEOPLE[2][0], submitterMail: PEOPLE[2][1],
+      prechargeNo: "PF20261115110001"
+    },
+    {
+      merchantId: "88021", merchantName: "迅达供应链-代发账户", biz: "履约",
+      txnId: "SC-XUNDA-B", reviewNo: "TR-SC-XUNDA-B",
+      transferCcy: "USD", transferAmt: 680, preCcy: "USD", preAmt: 660,
+      needApproval: true, approvalNo: "AP20261115110022",
+      approvalStatus: "审批驳回", preStatus: "审批拒绝",
+      salesNo: "21261115110022002", submitAt: "2026-11-15 11:00:44",
+      submitter: PEOPLE[2][0], submitterMail: PEOPLE[2][1],
+      prechargeNo: "PF20261115110002"
+    },
+    {
+      merchantId: "56102", merchantName: "欧港供应链-欧洲账户", biz: "履约",
+      txnId: "SC-USD-EUR", reviewNo: "TR-SC-USD-EUR",
+      transferCcy: "USD", transferAmt: 2180, preCcy: "USD", preAmt: 2180,
+      needApproval: true, approvalNo: "AP20261117184501",
+      approvalStatus: "审批通过", preStatus: "预充成功",
+      salesNo: "21261117184501001", submitAt: "2026-11-17 18:45:00",
+      submitter: PEOPLE[4][0], submitterMail: PEOPLE[4][1],
+      prechargeNo: "PF20261117184501"
+    },
+    {
+      merchantId: "90021", merchantName: "tini fong", biz: "广告",
+      txnId: "444440001233", reviewNo: "TR-ADS-001",
+      transferCcy: "EUR", transferAmt: 11, preCcy: "EUR", preAmt: 10,
+      needApproval: false, approvalNo: "", approvalStatus: "", preStatus: "预充成功",
+      salesNo: "2124032752334573568", submitAt: "2026-11-21 14:20:53",
+      submitter: PEOPLE[3][0], submitterMail: PEOPLE[3][1],
+      prechargeNo: "PF20261121142001"
+    },
+    {
+      merchantId: "90022", merchantName: "潮潮", biz: "广告",
+      txnId: "vvx0001xxyyyy", reviewNo: "TR-ADS-002",
+      transferCcy: "USD", transferAmt: 12, preCcy: "USD", preAmt: 12,
+      needApproval: false, approvalNo: "", approvalStatus: "", preStatus: "已完成还款",
+      salesNo: "21240237014028180", submitAt: "2026-11-21 14:15:18",
+      submitter: PEOPLE[3][0], submitterMail: PEOPLE[3][1],
+      prechargeNo: "PF20261121141501"
+    }
+  ];
+}
+
+function extraRow(i) {
+  const ads = i % 3 === 0;
+  const p = PEOPLE[i % PEOPLE.length];
+  const day = pad(1 + (i % 20), 2);
+  const hour = pad(10 + (i % 8), 2);
+  const need = !ads;
+  const passed = i % 5 !== 0;
+  const repaid = i % 7 === 0;
+  const ap = need ? "AP202611" + day + hour + pad(i % 90, 2) : "";
+  const pair = need && i % 4 === 1;
+  return {
+    merchantId: ads ? String(44000 + (i % 40)) : String(3600 + (i % 30)),
+    merchantName: ads ? (i % 5 === 0 ? LONG : ADS_NAMES[i % ADS_NAMES.length]) : FULFILL_NAMES[i % FULFILL_NAMES.length],
+    biz: ads ? "广告" : "履约",
+    txnId: (ads ? "vvx" : "ffx") + pad(111000 + i, 9),
+    reviewNo: "TR-GEN-" + pad(i, 4),
+    transferCcy: ["USD", "EUR", "GBP"][i % 3],
+    transferAmt: ads ? (8 + (i % 6)) : (110 + i * 3),
+    preCcy: ads && i % 4 === 2 ? "GBP" : ["USD", "EUR", "GBP"][i % 3],
+    preAmt: ads ? Number((8 + (i % 6) * 0.83).toFixed(2)) : (110 + i * 3 - (i % 5 === 2 ? 20 : 0)),
+    needApproval: need,
+    approvalNo: ap,
+    approvalStatus: need ? (passed ? "审批通过" : "审批驳回") : "",
+    preStatus: !need ? (repaid ? "已完成还款" : "预充成功") : (passed ? (repaid ? "已完成还款" : "预充成功") : "审批拒绝"),
+    salesNo: "2123" + pad(406000000 + i * 17, 12),
+    submitAt: "2026-11-" + day + " " + hour + ":" + pad((i * 7) % 60, 2) + ":" + pad((i * 13) % 60, 2),
+    submitter: p[0],
+    submitterMail: p[1],
+    prechargeNo: need ? "PF202611" + day + pad(i, 4) : "",
+    _pair: pair
+  };
+}
+
+const rows = featuredRows();
+while (rows.length < 80) {
+  const i = rows.length;
+  const r = extraRow(i);
+  rows.push(r);
+  if (r._pair && r.needApproval) {
+    const sibling = extraRow(i + 1000);
+    sibling.merchantId = r.merchantId;
+    sibling.merchantName = r.merchantName;
+    sibling.biz = r.biz;
+    sibling.transferCcy = r.transferCcy;
+    sibling.preCcy = r.preCcy;
+    sibling.needApproval = true;
+    sibling.approvalNo = r.approvalNo;
+    sibling.approvalStatus = r.approvalStatus;
+    sibling.preStatus = r.preStatus;
+    sibling.submitAt = r.submitAt;
+    sibling.submitter = r.submitter;
+    sibling.submitterMail = r.submitterMail;
+    sibling.txnId = r.txnId.replace("ffx", "ffy");
+    sibling.prechargeNo = r.prechargeNo.replace(/(\d{2})$/, function (m) { return pad(Number(m) + 1, 2); });
+    sibling.salesNo = String(Number(r.salesNo) + 1);
+    sibling.transferAmt = r.transferAmt + 80;
+    sibling.preAmt = r.preAmt + 60;
+    rows.push(sibling);
+  }
+}
+rows.forEach(function (r, i) { r.key = i; delete r._pair; });
+
+const batchCount = {};
+rows.forEach(function (r) {
+  if (!r.approvalNo) return;
+  batchCount[r.approvalNo] = (batchCount[r.approvalNo] || 0) + 1;
+});
+const OPS_BY_MERCHANT = {
+  "45811": "禾风履约组",
+  "71008": "青岚履约组",
+  "88021": "北港履约组",
+  "56102": "南枝履约组"
+};
+rows.forEach(function (r) {
+  if (r.biz === "履约") {
+    r.opsGroup = r.opsGroup || OPS_BY_MERCHANT[r.merchantId] || "交付履约组";
+    r.remark = r.remark || ((batchCount[r.approvalNo] || 1) > 1
+      ? "客户已完成转账，申请批量预充（同一商户、同一转账币种）。"
+      : "客户已完成转账，申请在途资金预充。");
+  } else {
+    r.opsGroup = "";
+    r.remark = r.remark || "广告账户预充。";
+  }
+});
+
+const state = { page: 1, size: 20, filtered: rows.slice(), more: false, editKey: null };
+
+function dash(v) { return v ? v : "-"; }
+
+function approvalTag(status) {
+  if (!status) return '<span class="muted">-</span>';
+  if (status === "审批通过") return '<span class="tag tag-ok">审批通过</span>';
+  if (status === "审批驳回") return '<span class="tag tag-bad">审批驳回</span>';
+  return '<span class="tag tag-wait">' + status + "</span>";
+}
+function preTag(status) {
+  if (!status) return '<span class="muted">-</span>';
+  if (status === "预充成功") return '<span class="tag tag-ok">预充成功</span>';
+  if (status === "已完成还款") return '<span class="tag tag-done">已完成还款</span>';
+  if (status === "审批拒绝") return '<span class="tag tag-bad">审批拒绝</span>';
+  if (status === "审批中") return '<span class="tag tag-wait">审批中</span>';
+  return '<span class="tag tag-done">' + status + "</span>";
+}
+
+function approvalCell(r) {
+  return r.approvalNo ? r.approvalNo : '<span class="muted">-</span>';
+}
+
+function applyFilter() {
+  const id = document.getElementById("qId").value.trim();
+  const line = document.getElementById("qLine").value;
+  const txn = document.getElementById("qTxn").value.trim();
+  const approval = document.getElementById("qApproval").value;
+  const ap = document.getElementById("qAp").value.trim();
+  const pre = document.getElementById("qPre").value;
+  const need = document.getElementById("qNeed").value;
+  const sales = document.getElementById("qSales").value.trim();
+  state.filtered = rows.filter(function (r) {
+    if (id && r.merchantId.indexOf(id) < 0) return false;
+    if (line && r.biz !== line) return false;
+    if (txn && r.txnId.toLowerCase().indexOf(txn.toLowerCase()) < 0) return false;
+    if (approval && r.approvalStatus !== approval) return false;
+    if (ap && r.approvalNo.indexOf(ap) < 0) return false;
+    if (pre && r.preStatus !== pre) return false;
+    if (need && (r.needApproval ? "是" : "否") !== need) return false;
+    if (sales && r.salesNo.indexOf(sales) < 0) return false;
+    return true;
+  });
+  state.page = 1;
+  render();
+}
+
+function render() {
+  const page = state.page;
+  const size = state.size;
+  const filtered = state.filtered;
+  const total = filtered.length;
+  const start = (page - 1) * size;
+  const pageRows = filtered.slice(start, start + size);
+  document.getElementById("tbody").innerHTML = pageRows.map(function (r) {
+    return "<tr>" +
+      '<td class="name">' + r.merchantName + "</td>" +
+      "<td>" + r.biz + "</td>" +
+      '<td class="txn">' + r.txnId + "</td>" +
+      "<td>" + r.transferCcy + "</td>" +
+      '<td class="amt">' + money(r.transferAmt) + "</td>" +
+      "<td>" + r.preCcy + "</td>" +
+      '<td class="num">' + money(r.preAmt) + "</td>" +
+      "<td>" + (r.needApproval ? "是" : "否") + "</td>" +
+      "<td>" + approvalCell(r) + "</td>" +
+      "<td>" + approvalTag(r.approvalStatus) + "</td>" +
+      "<td>" + preTag(r.preStatus) + "</td>" +
+      '<td class="sales">' + r.salesNo + "</td>" +
+      "<td>" + r.submitAt + "</td>" +
+      '<td class="person">' + person(r.submitter, r.submitterMail) + "</td>" +
+      '<td class="col-sticky"><button class="btn-link" type="button" data-detail="' + r.key + '">详情</button></td>' +
+      "</tr>";
+  }).join("");
+  document.getElementById("totalText").textContent = "共 " + total + " 条记录";
+  const pages = Math.max(1, Math.ceil(total / size));
+  let html = '<button class="page-btn" type="button" data-page="prev" ' + (page <= 1 ? "disabled" : "") + ">‹</button>";
+  const maxBtn = Math.min(pages, 7);
+  for (let i = 1; i <= maxBtn; i++) {
+    html += '<button class="page-btn' + (i === page ? " on" : "") + '" type="button" data-page="' + i + '">' + i + "</button>";
+  }
+  html += '<button class="page-btn" type="button" data-page="next" ' + (page >= pages ? "disabled" : "") + ">›</button>";
+  document.getElementById("pages").innerHTML = html;
+}
+
+function moneyCcy(ccy, n) {
+  return (ccy || "") + " " + money(n);
+}
+function pair(label, value, span) {
+  return '<div class="pair' + (span ? " span2" : "") + '"><span>' + label + "</span>" + value + "</div>";
+}
+function headChip(text, cls) {
+  return '<span class="chip ' + (cls || "") + '">' + text + "</span>";
+}
+function headStatusClass(status) {
+  if (status === "审批通过" || status === "预充成功" || status === "已完成还款") return "chip-ok";
+  if (status === "审批驳回" || status === "审批拒绝") return "chip-bad";
+  return "";
+}
+function plusSeconds(text, n) {
+  const d = new Date(String(text).replace(/-/g, "/"));
+  if (isNaN(d.getTime())) return text;
+  d.setSeconds(d.getSeconds() + n);
+  const p = function (v) { return String(v).padStart(2, "0"); };
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + " " + p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+}
+function merchantSum(r) {
+  const map = {
+    "45811": { total: 12860, unpaid: 4260 },
+    "71008": { total: 45200, unpaid: 2960 },
+    "88021": { total: 8100, unpaid: 0 },
+    "56102": { total: 2180, unpaid: 2180 }
+  };
+  const hit = map[r.merchantId];
+  if (hit) return { ccy: r.preCcy || r.transferCcy, total: hit.total, unpaid: hit.unpaid };
+  const hist = 800 + (Number(r.merchantId) % 4000);
+  const unpaid = (r.preStatus === "已完成还款" || r.preStatus === "审批拒绝") ? 0 : Number(r.preAmt);
+  return { ccy: r.preCcy || r.transferCcy, total: hist, unpaid: unpaid };
+}
+function progressHtml(r) {
+  const items = ['<li><i class="dot"></i><div>提交预充申请</div><div class="when">' + r.submitAt + " · " + person(r.submitter, r.submitterMail) + "</div></li>"];
+  if (r.needApproval) {
+    items.push('<li><i class="dot"></i><div>已发起飞书审批</div><div class="when">' + plusSeconds(r.submitAt, 2) + " · 等待财务处理</div></li>");
+  }
+  if (r.approvalStatus === "审批通过") {
+    items.push('<li><i class="dot"></i><div>审批通过</div><div class="when">' + plusSeconds(r.submitAt, 3600) + " · 财务已通过</div></li>");
+  }
+  if (r.approvalStatus === "审批驳回") {
+    items.push('<li><i class="dot"></i><div>审批驳回</div><div class="when">' + plusSeconds(r.submitAt, 3600) + " · 财务已驳回</div></li>");
+  }
+  if (r.preStatus === "预充成功") {
+    items.push('<li><i class="dot"></i><div>预充成功</div><div class="when">' + plusSeconds(r.submitAt, 3660) + "</div></li>");
+  }
+  if (r.preStatus === "已完成还款") {
+    items.push('<li><i class="dot"></i><div>已完成还款</div><div class="when">' + plusSeconds(r.submitAt, 86400) + "</div></li>");
+  }
+  return '<ol class="steps">' + items.join("") + "</ol>";
+}
+function openDetail(key) {
+  const r = rows.find(function (x) { return x.key === key; });
+  if (!r) return;
+  state.editKey = key;
+  const figures = merchantSum(r);
+  const chips = [
+    headChip(r.biz, r.biz === "履约" ? "chip-line" : "chip-ads"),
+    headChip(r.approvalStatus || r.preStatus || "已提交", headStatusClass(r.approvalStatus || r.preStatus))
+  ];
+  const approval = r.needApproval
+    ? (r.biz === "履约" ? pair("运营部业务组", dash(r.opsGroup), true) : "") +
+      pair("需要审批", "是") +
+      pair("审批单号", dash(r.approvalNo)) +
+      pair("审批状态", approvalTag(r.approvalStatus)) +
+      pair("预充状态", preTag(r.preStatus))
+    : pair("需要审批", "否") + pair("预充状态", preTag(r.preStatus));
+  document.getElementById("dlgTop").innerHTML =
+    '<div class="chips">' + chips.join("") + '</div><span class="drawer-no">' + dash(r.prechargeNo) + "</span>";
+  document.getElementById("dlgBody").innerHTML =
+    '<section class="block"><h3>单据信息</h3><div class="detail-grid">' +
+    pair("预充申请单号", dash(r.prechargeNo)) +
+    pair("交易ID", r.txnId) +
+    pair("商户ID", r.merchantId) +
+    pair("子业务", r.biz) +
+    "</div></section>" +
+    '<section class="block"><h3>商户预充汇总</h3><div class="sum-grid">' +
+    '<div class="sum-card"><span>预充金额累计</span><b>' + moneyCcy(figures.ccy, figures.total) + "</b></div>" +
+    '<div class="sum-card"><span>预充金额未还累计</span><b class="warn">' + moneyCcy(figures.ccy, figures.unpaid) + "</b></div></div></section>" +
+    '<section class="block"><h3>本单金额</h3><div class="detail-grid">' +
+    pair("转账金额", moneyCcy(r.transferCcy, r.transferAmt)) +
+    pair("预充金额", moneyCcy(r.preCcy, r.preAmt)) +
+    "</div></section>" +
+    '<section class="block"><h3>审批信息</h3><div class="detail-grid">' + approval + "</div></section>" +
+    '<section class="block"><h3>进度</h3>' + progressHtml(r) + "</section>" +
+    '<section class="block"><h3>' + (r.biz === "履约" ? "备注" : "预充备注") + '</h3><div class="remark">' + dash(r.remark) + "</div></section>";
+  document.getElementById("mask").hidden = false;
+}
+
+function closeDlg() { document.getElementById("mask").hidden = true; }
+
+document.getElementById("btnSearch").onclick = applyFilter;
+document.getElementById("btnReset").onclick = function () {
+  ["qId", "qTxn", "qAp", "qSales"].forEach(function (id) { document.getElementById(id).value = ""; });
+  ["qLine", "qApproval", "qPre", "qNeed"].forEach(function (id) { document.getElementById(id).value = ""; });
+  applyFilter();
+};
+document.getElementById("btnMore").onclick = function () {
+  state.more = !state.more;
+  document.getElementById("filters").classList.toggle("more", state.more);
+  this.textContent = state.more ? "收起" : "展开";
+};
+document.getElementById("pageSize").onchange = function (e) {
+  state.size = Number(e.target.value);
+  state.page = 1;
+  render();
+};
+document.getElementById("pages").onclick = function (e) {
+  const btn = e.target.closest("[data-page]");
+  if (!btn || btn.disabled) return;
+  const pages = Math.max(1, Math.ceil(state.filtered.length / state.size));
+  if (btn.dataset.page === "prev") state.page = Math.max(1, state.page - 1);
+  else if (btn.dataset.page === "next") state.page = Math.min(pages, state.page + 1);
+  else state.page = Number(btn.dataset.page);
+  render();
+};
+document.getElementById("tbody").onclick = function (e) {
+  const detail = e.target.closest("[data-detail]");
+  if (detail) openDetail(Number(detail.dataset.detail));
+};
+document.getElementById("btnClose").onclick = closeDlg;
+document.getElementById("mask").addEventListener("click", function (e) {
+  if (e.target.id === "mask") closeDlg();
+});
+
+render();
+</script>
+</body>
+</html>

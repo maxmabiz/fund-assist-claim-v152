@@ -119,9 +119,13 @@
     .btn.default:hover { color: #1677ff; border-color: #1677ff; }
     .btn.ghost { background: #fff; color: #1677ff; border-color: #1677ff; }
     .btn.ghost:hover { background: #e6f4ff; }
+    .btn.primary:disabled { background: #91caff; border-color: #91caff; color: #fff; }
+    .btn.ghost:disabled { color: rgba(0, 0, 0, 0.25); border-color: #d9d9d9; background: #fff; }
 
     .table-card { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
     .toolbar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
+    .toolbar-left { display: flex; align-items: center; gap: 8px 12px; min-width: 0; flex-wrap: wrap; }
+    .toolbar-count { color: rgba(0, 0, 0, 0.45); font-size: 12px; line-height: 18px; max-width: 520px; white-space: normal; }
     .table-wrap { flex: 1; min-height: 0; overflow: auto; }
     table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 1880px; table-layout: fixed; font-size: 13px; }
     th, td {
@@ -203,6 +207,45 @@
     }
     .dialog.revoke { width: min(760px, 100%); }
     .dialog.precharge { width: min(800px, 100%); }
+    .dialog.precharge.batch { width: min(960px, 100%); }
+    .batch-note { margin: 0 0 12px; color: rgba(0, 0, 0, 0.65); }
+    .batch-detail-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0 6px; padding-right: 15px; }
+    .batch-detail-hd .section-title { margin: 0; }
+    .batch-detail-hd .link { flex: none; font-weight: 400; }
+    .batch-list { display: flex; flex-direction: column; gap: 16px; margin: 12px 0 8px; }
+    .batch-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      border: 1px solid #e8e8e8; border-radius: 8px; padding: 12px 14px;
+      background: #fafafa; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    .batch-item:nth-child(even) { background: #fff; }
+    .batch-item.bad { border-color: #ff4d4f; background: #fff2f0; }
+    .batch-index {
+      flex: none; width: 28px; height: 28px; margin-top: 1px; border-radius: 6px;
+      background: #1677ff; color: #fff; font-size: 13px; font-weight: 600;
+      display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .batch-item-body { flex: 1; min-width: 0; }
+    .batch-item-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #e8e8e8; }
+    .batch-item-hd .batch-item-title { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+    .batch-item-hd em { font-style: normal; color: rgba(0, 0, 0, 0.45); font-weight: 400; flex: none; }
+    .batch-item-hd strong { font-weight: 600; }
+    .batch-kv { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 0 0 10px; line-height: 22px; align-items: center; }
+    .batch-kv span { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
+    .batch-kv em { font-style: normal; color: rgba(0, 0, 0, 0.45); white-space: nowrap; }
+    .batch-fields { display: flex; flex-direction: column; gap: 8px; }
+    .batch-field { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+    .batch-field-label { flex: none; width: 148px; color: rgba(0, 0, 0, 0.88); white-space: nowrap; }
+    .batch-field .voucher-merge { flex: 1; min-width: 0; margin: 0; }
+    .batch-field .file-rows { min-width: 0; }
+    .batch-field .file-row { min-height: 32px; padding: 0 10px; background: #fff; }
+    .batch-field .add-line { margin: 0; }
+    .batch-field .amount-input { flex: 1; min-width: 180px; max-width: 320px; background: #fff; }
+    .batch-field .amount-input input { text-align: right; }
+    .batch-field .err { flex: 1 1 100%; margin: 0 0 0 156px; }
+    .batch-item .amount-pair { margin-top: 0; }
+    table.list th.check, table.list td.check { width: 36px; text-align: center; padding-left: 12px; padding-right: 8px; }
+    table.list td.check input { margin: 0; vertical-align: middle; }
     .sheet { width: 100%; min-width: 0; border-collapse: collapse; margin: 0 0 16px; table-layout: fixed; }
     .sheet th, .sheet td { border: 1px solid #f0f0f0; padding: 10px 12px; font-weight: 400; text-align: left; line-height: 22px; overflow: visible; }
     .sheet td { white-space: normal; word-break: break-all; }
@@ -221,6 +264,10 @@
     .precharge-note textarea.control { height: 96px; min-height: 96px; }
     .precharge-ft { justify-content: flex-end; }
     .precharge-hint { margin-right: auto; color: #ff4d4f; }
+    .batch-summary { margin-right: auto; display: flex; flex-wrap: wrap; gap: 4px 20px; line-height: 22px; min-width: 0; }
+    .batch-summary span { white-space: nowrap; }
+    .batch-summary em { font-style: normal; color: rgba(0, 0, 0, 0.45); margin-right: 6px; }
+    .batch-summary b { font-weight: 600; }
     .guide { margin: 8px 0 16px; border: 1px solid #ffe58f; border-radius: 8px; background: #fffbe6; }
     .guide-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; }
     .guide-hd h3 { margin: 0; font-size: 14px; font-weight: 600; }
@@ -235,13 +282,13 @@
       display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 8px 12px;
       border: 1px solid #f0f0f0; border-radius: 6px; background: #fafafa;
     }
-    .file-row .kind {
+    .file-row .kind, .lark-file .kind {
       flex: none; box-sizing: border-box; min-width: 40px; height: 22px; padding: 0 6px;
       display: inline-flex; align-items: center; justify-content: center;
       border-radius: 4px; font-size: 12px; font-weight: 600; font-style: normal; line-height: 1;
     }
-    .file-row .kind.pdf { color: #cf1322; background: #fff1f0; }
-    .file-row .kind.img { color: #1677ff; background: #e6f4ff; }
+    .file-row .kind.pdf, .lark-file .kind.pdf { color: #cf1322; background: #fff1f0; }
+    .file-row .kind.img, .lark-file .kind.img { color: #1677ff; background: #e6f4ff; }
     .file-row .file-name {
       flex: 1 1 auto; min-width: 0; max-width: none; overflow: hidden; text-overflow: ellipsis;
       white-space: nowrap; word-break: normal; text-align: left; font-size: 13px; color: rgba(0, 0, 0, 0.88);
@@ -249,6 +296,12 @@
     .file-row .link { flex: none; margin-left: auto; white-space: nowrap; }
     .file-row .file-ops { margin-left: auto; display: flex; gap: 12px; flex: none; }
     .file-row .file-ops .link { margin-left: 0; }
+    .file-ops .replace-file {
+      position: relative; display: inline-flex; align-items: center; cursor: pointer;
+    }
+    .file-ops .replace-file input {
+      position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+    }
     .match-files { display: flex; flex-direction: column; gap: 12px; margin: 12px 0 8px; }
     .match-files .attach-field > span { display: block; margin-bottom: 8px; color: rgba(0, 0, 0, 0.45); }
     .add-line {
@@ -256,6 +309,12 @@
       border: 1px dashed #d9d9d9; border-radius: 6px; background: #fff; color: rgba(0, 0, 0, 0.65); cursor: pointer;
     }
     .add-line:hover { border-color: #1677ff; color: #1677ff; }
+    .voucher-merge { display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 0; }
+    .voucher-merge .add-line { align-self: flex-start; position: relative; margin-top: 0; }
+    .voucher-merge .add-line input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .voucher-merge .add-line.bad { border-color: #ff4d4f; }
+    .voucher-merge .err,
+    .voucher-merge .attach-tip { margin: 0; }
     .tip-cell { padding: 8px 12px; }
     .tip-cell .attach-tip { margin: 0; }
     .proof-block { margin-top: 16px; }
@@ -522,7 +581,7 @@
     .paper .note { margin-top: 28px; }
 
     #hover-tip {
-      position: fixed; z-index: 80; max-width: 280px; padding: 8px 10px;
+      position: fixed; z-index: 80; max-width: 360px; padding: 8px 10px;
       background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 12px; line-height: 18px;
       font-weight: 400; border-radius: 6px; pointer-events: none; white-space: normal;
     }
@@ -530,11 +589,117 @@
 
     #toast {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 90;
-      display: none; align-items: center; gap: 8px; padding: 10px 16px; background: #fff;
+      display: none; align-items: flex-start; gap: 8px; padding: 10px 16px; background: #fff;
       border-radius: 8px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      max-width: min(520px, calc(100% - 32px)); font-size: 13px; line-height: 20px;
     }
     #toast.show { display: flex; }
-    .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: #52c41a; }
+    #toast.center {
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      align-items: center;
+    }
+    .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: #52c41a; margin-top: 6px; flex: none; }
+    .toast-dot.warn { background: #faad14; }
+    #toast.center .toast-dot { margin-top: 0; }
+
+    .mask.lark-mask {
+      z-index: 70;
+      align-items: flex-start;
+      overflow: auto;
+      padding: 24px 16px 40px;
+    }
+    .mask.lark-mask.is-page {
+      position: relative;
+      inset: auto;
+      z-index: 1;
+      min-height: 100%;
+      background: #f5f6f7;
+    }
+    body.lark-page { background: #f5f6f7; height: auto; min-height: 100%; overflow: auto; }
+    body.lark-page .app { display: none; }
+    body.lark-page #overlay { min-height: 100%; }
+    .lark-sheet {
+      width: min(560px, 100%);
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+      overflow: hidden;
+    }
+    .lark-sheet.is-batch { width: min(640px, 100%); }
+    .lark-hd {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      padding: 18px 20px 14px; border-bottom: 1px solid #f0f0f0;
+    }
+    .lark-hd h2 { margin: 0; font-size: 18px; font-weight: 600; line-height: 26px; }
+    .lark-meta { margin-top: 6px; color: rgba(0, 0, 0, 0.45); font-size: 12px; line-height: 18px; }
+    .lark-bd { padding: 8px 20px 20px; }
+    .lark-sec { margin-top: 14px; }
+    .lark-sec-title {
+      background: #f5f6f7; border-radius: 6px; padding: 8px 12px;
+      font-size: 13px; font-weight: 600; line-height: 20px;
+    }
+    .lark-row {
+      display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 8px 12px;
+      align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f0f0;
+    }
+    .lark-lab { color: rgba(0, 0, 0, 0.65); line-height: 20px; }
+    .lark-lab .req { color: #ff4d4f; margin-right: 2px; font-style: normal; }
+    .lark-val {
+      min-height: 32px; border: 1px solid #e5e6eb; border-radius: 6px;
+      background: #f7f8fa; padding: 5px 11px; line-height: 20px; word-break: break-all;
+    }
+    .lark-money { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 8px; }
+    .lark-item {
+      margin-top: 10px; border: 1px dashed #d9d9d9; border-radius: 8px;
+      padding: 2px 8px 8px; background: #fafafa;
+    }
+    .lark-item-hd {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 8px 4px 2px; font-weight: 600;
+    }
+    .lark-item-hd em { font-style: normal; color: #1677ff; margin-right: 6px; }
+    .lark-sum {
+      margin: 10px 0 4px; padding: 12px 12px 10px;
+      background: #e6f4ff; border: 1px solid #91caff; border-radius: 8px;
+    }
+    .lark-sum-title { font-size: 13px; font-weight: 600; color: #0958d9; margin-bottom: 10px; }
+    .lark-sum-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
+    }
+    .lark-sum-card {
+      background: #fff; border-radius: 6px; padding: 8px 10px;
+    }
+    .lark-sum-card span { display: block; color: rgba(0, 0, 0, 0.45); font-size: 12px; line-height: 18px; }
+    .lark-sum-card b { display: block; margin-top: 4px; font-size: 16px; font-weight: 600; line-height: 22px; word-break: break-all; }
+    .lark-sum-card.is-precharge { background: #fffbe6; }
+    .lark-sum-card.is-precharge span { color: #ad6800; }
+    .lark-sum-card.is-precharge b { color: #ad4e00; }
+    @media (max-width: 720px) {
+      .lark-sum-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .lark-row-files { align-items: start; }
+    .lark-row-files .lark-files { padding: 0; }
+    .lark-row-files .lark-empty { margin: 0; min-height: 32px; }
+    .lark-files { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 4px 0; }
+    .lark-file {
+      display: inline-flex; align-items: center; gap: 6px; height: 32px;
+      padding: 0 10px; border: 1px solid #e5e6eb; border-radius: 6px; background: #fff; max-width: 100%;
+    }
+    .lark-file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lark-empty {
+      margin: 10px 4px 0; min-height: 72px; border: 1px dashed #d9d9d9; border-radius: 8px;
+      display: grid; place-items: center; color: rgba(0, 0, 0, 0.25);
+    }
+    .lark-note {
+      margin-top: 16px; padding: 12px 14px; background: #fff7e6; border: 1px solid #ffd591;
+      border-radius: 8px; color: rgba(0, 0, 0, 0.65); font-size: 12px; line-height: 1.7;
+    }
+    .lark-note .ttl { font-weight: 600; color: rgba(0, 0, 0, 0.88); }
+    .lark-note ol { margin: 8px 0 0; padding-left: 18px; }
+    .lark-ft { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px 16px; border-top: 1px solid #f0f0f0; }
 
     .drawer-mask {
       position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.45);
@@ -609,7 +774,7 @@
 </style>
 <script>
 (function () {
-  var KEY = "fund-assist-claim-v15-gate";
+  var KEY = "fund-assist-claim-v152-gate";
   var local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   var nested = false;
   try { nested = window.top !== window.self; } catch (e) { nested = true; }
@@ -628,7 +793,7 @@
 <script>
 (function () {
   var HASH = "d11e02d5f08a59bd64ad1e8040eff2f79171b34a87cc9adc94ce6b20b02206f5";
-  var KEY = "fund-assist-claim-v15-gate";
+  var KEY = "fund-assist-claim-v152-gate";
   function unlock() {
     document.documentElement.classList.add("gate-ok");
     var gate = document.getElementById("gate");
@@ -953,7 +1118,64 @@
       }
       SCENE_CASES.slice().reverse().forEach((s) => rows.unshift(makeSceneReview(s)));
       rows.unshift(makeUsdEurPrechargeRow());
+      rows.unshift(makeAdsMatchedRow());
+      makeFulfillBatchDemoRows().slice().reverse().forEach((row) => rows.unshift(row));
       return rows;
+    }
+
+    function makeAdsMatchedRow() {
+      const when = "2026-11-17 16:40:00";
+      const voucher = "SC-ADS-OK.pdf";
+      return {
+        id: "sc-ads-ok",
+        reviewNo: "TR-SC-ADS-OK",
+        merchantId: "14229",
+        merchantName: "星辰出海-广告主账户",
+        merchantUuid: "scene-ADS-OK",
+        uniqueId: "ops@starlink-ads.test",
+        biz: "广告",
+        submitAt: when,
+        submitter: "沈知夏",
+        submitterMail: "shen.zhixia@harbor-demo.test",
+        platform: "Airwallex",
+        bizTxn: "SC-ADS-OK",
+        transferDate: when.slice(0, 10),
+        payer: "STARLINK ADS USD",
+        currency: "USD",
+        transferAmt: 880,
+        accountCcy: "USD",
+        amount: 880,
+        voucher: voucher,
+        shots: [voucher],
+        others: [],
+        assign: "-",
+        confirmStatus: "已确认",
+        status: "已匹配",
+        allocated: false,
+        internalNote: "广告已匹配，可单笔预充，不能批量预充",
+        precharge: "否",
+        prechargeNo: "",
+        expectedAt: "",
+        opsGroup: "",
+        proofFiles: [],
+        prechargeRemark: "",
+        flowId: "seed-ads-ok",
+        sceneTxn: "SC-ADS-OK",
+        prechargeCurrency: "",
+        prechargeAmount: null,
+        creditCurrency: "USD",
+        creditAmount: 880,
+        payPlatform: "Airwallex",
+        flowTxn: "zzadsok0000000000001a1",
+        matchAt: "2026-11-17 16:48:00",
+        matcher: CURRENT_USER[0],
+        matcherMail: CURRENT_USER[1],
+        matchRemark: "流水金额一致",
+        auditAt: "2026-11-17 16:52:00",
+        auditor: PEOPLE[5][0],
+        auditorMail: PEOPLE[5][1],
+        auditRemark: "审核通过"
+      };
     }
 
     function makeUsdEurPrechargeRow() {
@@ -1009,6 +1231,161 @@
         auditorMail: PEOPLE[1][1],
         auditRemark: "审核通过"
       };
+    }
+
+    function makeFulfillBatchDemoRows() {
+      return [
+        {
+          id: "sc-batch-a",
+          reviewNo: "TR-SC-BATCH-A",
+          merchantId: "45811",
+          merchantName: "禾风制造",
+          merchantUuid: "scene-BATCH-A",
+          uniqueId: "ap@hefeng-mfg.test",
+          biz: "履约",
+          submitAt: "2026-11-17 18:12:00",
+          submitter: "许嘉树",
+          submitterMail: "xu.jiashu@harbor-demo.test",
+          platform: "Payoneer",
+          bizTxn: "SC-BATCH-A",
+          transferDate: "2026-11-17",
+          payer: "HEFENG MFG USD",
+          currency: "USD",
+          transferAmt: 1860,
+          accountCcy: "USD",
+          amount: 1860,
+          voucher: "SC-BATCH-A.pdf",
+          shots: ["SC-BATCH-A.pdf", "SC-BATCH-A-extra.png"],
+          others: ["SC-BATCH-A-extra.png"],
+          assign: "-",
+          confirmStatus: "已确认",
+          status: "已匹配",
+          allocated: false,
+          internalNote: "履约已匹配，可批量预充",
+          precharge: "否",
+          prechargeNo: "",
+          expectedAt: "",
+          opsGroup: "",
+          proofFiles: [],
+          prechargeRemark: "",
+          flowId: "seed-batch-a",
+          sceneTxn: "SC-BATCH-A",
+          prechargeCurrency: "",
+          prechargeAmount: null,
+          creditCurrency: "USD",
+          creditAmount: 1860,
+          payPlatform: "Payoneer",
+          flowTxn: "zzbatcha000000000001a1",
+          matchAt: "2026-11-17 18:20:00",
+          matcher: CURRENT_USER[0],
+          matcherMail: CURRENT_USER[1],
+          matchRemark: "流水金额一致",
+          auditAt: "2026-11-17 18:25:00",
+          auditor: PEOPLE[3][0],
+          auditorMail: PEOPLE[3][1],
+          auditRemark: "审核通过"
+        },
+        {
+          id: "sc-batch-b",
+          reviewNo: "TR-SC-BATCH-B",
+          merchantId: "45811",
+          merchantName: "禾风制造",
+          merchantUuid: "scene-BATCH-B",
+          uniqueId: "ap@hefeng-mfg.test",
+          biz: "履约",
+          submitAt: "2026-11-17 17:48:00",
+          submitter: "林知衡",
+          submitterMail: "lin.zhiheng@harbor-demo.test",
+          platform: "Airwallex",
+          bizTxn: "SC-BATCH-B",
+          transferDate: "2026-11-17",
+          payer: "HEFENG MFG USD",
+          currency: "USD",
+          transferAmt: 2460,
+          accountCcy: "USD",
+          amount: 2400,
+          voucher: "SC-BATCH-B.pdf",
+          shots: ["SC-BATCH-B.pdf"],
+          others: [],
+          assign: "-",
+          confirmStatus: "已确认",
+          status: "已匹配",
+          allocated: false,
+          internalNote: "履约已匹配，可批量预充",
+          precharge: "否",
+          prechargeNo: "",
+          expectedAt: "",
+          opsGroup: "",
+          proofFiles: [],
+          prechargeRemark: "",
+          flowId: "seed-batch-b",
+          sceneTxn: "SC-BATCH-B",
+          prechargeCurrency: "",
+          prechargeAmount: null,
+          creditCurrency: "USD",
+          creditAmount: 2460,
+          payPlatform: "Airwallex",
+          flowTxn: "zzbatchb000000000001b1",
+          matchAt: "2026-11-17 18:05:00",
+          matcher: CURRENT_USER[0],
+          matcherMail: CURRENT_USER[1],
+          matchRemark: "流水金额一致",
+          auditAt: "2026-11-17 18:10:00",
+          auditor: PEOPLE[0][0],
+          auditorMail: PEOPLE[0][1],
+          auditRemark: "审核通过"
+        },
+        {
+          id: "sc-batch-c",
+          reviewNo: "TR-SC-BATCH-C",
+          merchantId: "45811",
+          merchantName: "禾风制造",
+          merchantUuid: "scene-BATCH-C",
+          uniqueId: "ap@hefeng-mfg.test",
+          biz: "履约",
+          submitAt: "2026-11-17 17:22:00",
+          submitter: "许嘉树",
+          submitterMail: "xu.jiashu@harbor-demo.test",
+          platform: "Airwallex",
+          bizTxn: "SC-BATCH-C",
+          transferDate: "2026-11-17",
+          payer: "HEFENG MFG EUR",
+          currency: "EUR",
+          transferAmt: 1520,
+          accountCcy: "EUR",
+          amount: 1520,
+          voucher: "SC-BATCH-C.pdf",
+          shots: ["SC-BATCH-C.pdf"],
+          others: [],
+          assign: "-",
+          confirmStatus: "已确认",
+          status: "已匹配",
+          allocated: false,
+          internalNote: "履约已匹配，转账欧元，同商户跨币种不可与 USD 单一起批量预充",
+          precharge: "否",
+          prechargeNo: "",
+          expectedAt: "",
+          opsGroup: "",
+          proofFiles: [],
+          prechargeRemark: "",
+          flowId: "seed-batch-c",
+          sceneTxn: "SC-BATCH-C",
+          prechargeCurrency: "",
+          prechargeAmount: null,
+          creditCurrency: "EUR",
+          creditAmount: 1520,
+          payPlatform: "Airwallex",
+          flowTxn: "zzbatchc000000000001c1",
+          matchAt: "2026-11-17 17:35:00",
+          matcher: CURRENT_USER[0],
+          matcherMail: CURRENT_USER[1],
+          matchRemark: "流水金额一致",
+          auditAt: "2026-11-17 17:40:00",
+          auditor: PEOPLE[1][0],
+          auditorMail: PEOPLE[1][1],
+          auditRemark: "审核通过"
+        }
+      ];
     }
 
     function makeSceneReview(s) {
@@ -1185,6 +1562,7 @@
       return flows;
     }
 
+    const BATCH_PRECHARGE_MAX = 20;
     const state = {
       rows: buildRows(),
       flows: buildFlows(),
@@ -1192,9 +1570,194 @@
       applied: emptyQuery(),
       page: 1,
       pageSize: 10,
+      selected: {},
       dialog: null,
       drawerId: null
     };
+
+    function isFulfillBiz(row) {
+      return !!(row && row.biz === "履约");
+    }
+
+    function canCheckBatchBox(row) {
+      return !!(row && row.status === "已匹配" && !row.allocated && row.precharge !== "是");
+    }
+
+    function canBatchPrecharge(row) {
+      return !!(isFulfillBiz(row) && canCheckBatchBox(row));
+    }
+
+    function batchBizToast(row) {
+      if (row && row.biz === "广告") return "批量预充仅支持代发业务，广告请使用行内「预充」。";
+      return "批量预充仅支持代发业务，本条是「" + ((row && row.biz) || "其他") + "」，请使用行内「预充」。";
+    }
+
+    function batchGroupKey(row) {
+      return (row && row.merchantId ? row.merchantId : "") + "|" + (row && row.currency ? row.currency : "");
+    }
+
+    function selectedBatchRows() {
+      return state.rows.filter((row) => state.selected[row.id] && canBatchPrecharge(row));
+    }
+
+    function batchGroupLabel(row) {
+      if (!row) return "";
+      return (row.merchantName || "商户") + " / " + (row.currency || "币种");
+    }
+
+    function batchLockToast(row, lockRow) {
+      if (!lockRow) return "批量预充须同一商户、同一转账币种，不同商户或不同币种请分开提交。";
+      const lockName = lockRow.merchantName || "当前商户";
+      const lockCcy = lockRow.currency || "币种";
+      const name = row && row.merchantName ? row.merchantName : "本条商户";
+      const ccy = row && row.currency ? row.currency : "币种";
+      if (row && row.merchantId !== lockRow.merchantId) {
+        return "不能一起批量预充：须同一商户。当前已选「" + lockName + "」，本条是「" + name + "」。请取消已选后再勾本条，或对这两家商户分开提交。";
+      }
+      if (row && row.currency !== lockRow.currency) {
+        return "不能一起批量预充：须同一转账币种。当前已选「" + lockName + " / " + lockCcy + "」，本条是 " + ccy + "。请取消已选后再勾本条，或按币种分开提交。";
+      }
+      return "不能一起批量预充：须同一商户、同一转账币种。请取消已选后再勾本条，或分开提交。";
+    }
+
+    function batchRowSelectState(row) {
+      if (!canCheckBatchBox(row)) {
+        return { disabled: true, title: "" };
+      }
+      return { disabled: false, title: "" };
+    }
+
+    function batchSelectAttrs(select) {
+      const bits = [];
+      if (select.disabled) bits.push("disabled");
+      if (select.title) bits.push('data-tip="' + esc(select.title) + '"');
+      return bits.length ? " " + bits.join(" ") : "";
+    }
+
+    function batchBarCopy(n, lockRow) {
+      if (!n) return "批量预充仅支持代发，须同一商户、同一转账币种，至少 2 条。广告请使用行内「预充」。";
+      const group = batchGroupLabel(lockRow);
+      if (n < 2) return "已选 1 条代发单（" + group + "）。请再勾选该商户、该转账币种的代发记录，至少 2 条才能提交。";
+      return "已选 " + n + " 条代发单（" + group + "）。还可勾选该商户、该转账币种；广告不能批量预充。";
+    }
+
+    function pruneBatchSelection() {
+      Object.keys(state.selected).forEach((id) => {
+        const row = state.rows.find((item) => item.id === id);
+        if (!row || !canBatchPrecharge(row)) delete state.selected[id];
+      });
+      const rows = selectedBatchRows();
+      if (rows.length <= 1) return;
+      const key = batchGroupKey(rows[0]);
+      rows.slice(1).forEach((row) => {
+        if (batchGroupKey(row) !== key) delete state.selected[row.id];
+      });
+    }
+
+    function pageRows() {
+      const all = listRows();
+      const start = (state.page - 1) * state.pageSize;
+      return all.slice(start, start + state.pageSize);
+    }
+
+    function updateBatchBar() {
+      pruneBatchSelection();
+      const pickedRows = selectedBatchRows();
+      const n = pickedRows.length;
+      const lockRow = pickedRows[0];
+      const btn = document.getElementById("batch-precharge");
+      const count = document.getElementById("batch-count");
+      if (btn) {
+        btn.disabled = n < 2;
+        btn.title = n < 2
+          ? (n === 1 ? "已选 1 条代发单，请再勾选同商户、同转账币种的代发记录" : "请勾选同一商户、同一转账币种的至少 2 条代发可预充单")
+          : "提交已选代发单据的批量预充";
+      }
+      if (count) count.textContent = batchBarCopy(n, lockRow);
+      document.querySelectorAll('input[data-batch="row"]').forEach((input) => {
+        const row = state.rows.find((item) => item.id === input.dataset.id);
+        if (!row) return;
+        const select = batchRowSelectState(row);
+        input.disabled = select.disabled;
+        if (select.title) input.setAttribute("data-tip", select.title);
+        else input.removeAttribute("data-tip");
+      });
+      const head = document.getElementById("batch-page");
+      if (head) {
+        const eligible = pageRows().filter(canBatchPrecharge);
+        const selectable = lockRow
+          ? eligible.filter((row) => batchGroupKey(row) === batchGroupKey(lockRow))
+          : eligible;
+        const picked = selectable.filter((row) => state.selected[row.id]).length;
+        head.checked = selectable.length > 0 && picked === selectable.length;
+        head.indeterminate = picked > 0 && picked < selectable.length;
+        head.disabled = !eligible.length;
+        head.setAttribute("data-tip", "全选本页同一商户、同一转账币种的代发可预充单。广告不能批量预充。");
+      }
+    }
+
+    function toggleBatchRow(id, on) {
+      const row = state.rows.find((item) => item.id === id);
+      if (!row || !canCheckBatchBox(row)) return false;
+      if (!isFulfillBiz(row)) {
+        showToast(batchBizToast(row), { warn: true, ms: 4500 });
+        return false;
+      }
+      if (!canBatchPrecharge(row)) return false;
+      if (on) {
+        const lockRow = selectedBatchRows().find((item) => item.id !== id);
+        if (lockRow && batchGroupKey(row) !== batchGroupKey(lockRow)) {
+          showToast(batchLockToast(row, lockRow), { warn: true, ms: 4500 });
+          return false;
+        }
+        if (!state.selected[id] && selectedBatchRows().length >= BATCH_PRECHARGE_MAX) {
+          showToast("单次最多选择 " + BATCH_PRECHARGE_MAX + " 条", { warn: true });
+          return false;
+        }
+        state.selected[id] = true;
+      } else {
+        delete state.selected[id];
+      }
+      updateBatchBar();
+      return true;
+    }
+
+    function largestBatchGroup(rows) {
+      const groups = {};
+      let best = [];
+      rows.forEach((row) => {
+        const key = batchGroupKey(row);
+        const list = groups[key] || (groups[key] = []);
+        list.push(row);
+        if (list.length > best.length) best = list;
+      });
+      return best;
+    }
+
+    function toggleBatchPage(on) {
+      const eligible = pageRows().filter(canBatchPrecharge);
+      if (on) {
+        const lockRow = selectedBatchRows()[0];
+        const target = lockRow
+          ? eligible.filter((row) => batchGroupKey(row) === batchGroupKey(lockRow))
+          : largestBatchGroup(eligible);
+        target.forEach((row) => toggleBatchRow(row.id, true));
+        const skipped = eligible.length - target.length;
+        if (skipped > 0 && target[0]) {
+          showToast("已勾选本页「" + batchGroupLabel(target[0]) + "」共 " + target.length + " 条。另有 " + skipped + " 条商户或转账币种不同，不能一起批量预充，请分开提交。", { warn: true, ms: 4500 });
+        }
+      } else {
+        eligible.forEach((row) => delete state.selected[row.id]);
+        updateBatchBar();
+      }
+      renderRows();
+    }
+
+    function approvalNoOf(row) {
+      if (row && row.approvalNo) return row.approvalNo;
+      if (row && row.biz === "履约" && row.prechargeNo) return "AP" + row.submitAt.replace(/\D/g, "").slice(0, 12);
+      return "";
+    }
 
     function emptyQuery() {
       return { reviewNo: "", merchantId: "", merchantName: "", uniqueId: "", biz: "", status: "", start: "", end: "", txn: "", precharge: "", prechargeNo: "" };
@@ -1277,8 +1840,14 @@
       const canRevoke = row.status === "待匹配";
       const canReject = row.status === "已匹配" && isFinance();
       const canPrecharge = row.status === "已匹配" && !row.allocated;
-      const amount = row.amount == null ? '<span class="dash">-</span>' : '<span class="money">' + money(row.amount) + "</span>";
+      const batchable = canBatchPrecharge(row);
+      const checked = batchable && !!state.selected[row.id];
+      const select = batchRowSelectState(row);
+      const transferAmt = rowTransferAmt(row);
+      const amount = transferAmt == null ? '<span class="dash">-</span>' : '<span class="money">' + money(transferAmt) + "</span>";
+      const approvalNo = approvalNoOf(row);
       return "<tr>" +
+        '<td class="check"><input type="checkbox" data-batch="row" data-id="' + row.id + '"' + (checked ? " checked" : "") + ' aria-label="选择 ' + esc(row.reviewNo) + '"' + batchSelectAttrs(select) + "></td>" +
         "<td>" + showText(row.reviewNo) + "</td>" +
         "<td>" + esc(row.merchantId) + "</td>" +
         "<td>" + showText(row.merchantName) + "</td>" +
@@ -1298,6 +1867,7 @@
         "<td>" + (row.internalNote ? showText(row.internalNote) : '<span class="dash">-</span>') + "</td>" +
         "<td>" + esc(row.precharge) + "</td>" +
         "<td>" + (row.prechargeNo ? '<button type="button" class="link" data-act="precharge-open" data-id="' + row.id + '">' + esc(row.prechargeNo) + "</button>" : '<span class="dash">-</span>') + "</td>" +
+        "<td>" + (approvalNo ? showText(approvalNo) : '<span class="dash">-</span>') + "</td>" +
         "<td>" + cell(row.prechargeCurrency) + "</td>" +
         "<td class=\"time\">" + (row.prechargeAmount == null ? '<span class="dash">-</span>' : money(row.prechargeAmount)) + "</td>" +
         "<td>" + cell(row.creditCurrency) + "</td>" +
@@ -1356,10 +1926,11 @@
         field("预充申请单号", '<input class="control" data-q="prechargeNo" placeholder="请输入预充申请单号" aria-label="预充申请单号">') +
         '<div class="filter-actions"><button type="button" class="btn primary" data-act="search">搜索</button><button type="button" class="btn default" data-act="reset">重置</button></div>' +
         "</div></section>" +
-        '<section class="card table-card"><div class="toolbar"><button type="button" class="btn primary" data-act="create">' + ICONS.plus + '代客提交线下转账</button><button type="button" class="btn ghost" data-act="export">' + ICONS.download + "导出数据</button></div>" +
+        '<section class="card table-card"><div class="toolbar"><div class="toolbar-left"><button type="button" class="btn primary" data-act="create">' + ICONS.plus + '代客提交线下转账</button><button type="button" class="btn ghost" id="batch-precharge" data-act="batch-precharge" disabled>批量预充</button><span class="toolbar-count" id="batch-count"></span></div><button type="button" class="btn ghost" data-act="export">' + ICONS.download + "导出数据</button></div>" +
         '<div class="table-wrap"><table class="list"><thead><tr>' +
-        "<th>转账审核单号</th><th>商户ID</th><th>商户名称</th><th>商户唯一标识</th><th>子业务名称</th><th>提交时间</th><th>提交人</th><th>转账平台</th><th>业务填写交易 ID</th><th>转账日期</th><th>付款人名称</th><th>入账币种</th>" +
-        "<th>" + amountLabel() + "</th><th>转账分配</th><th>状态</th><th>转账截图</th><th>内部备注</th><th>预充申请</th><th>预充申请单号</th>" +
+        '<th class="check"><input type="checkbox" id="batch-page" data-batch="page" aria-label="全选本页同一商户、同一转账币种的代发可预充单" data-tip="全选本页同一商户、同一转账币种的代发可预充单。广告不能批量预充。"></th>' +
+        "<th>转账审核单号</th><th>商户ID</th><th>商户名称</th><th>商户唯一标识</th><th>子业务名称</th><th>提交时间</th><th>提交人</th><th>转账平台</th><th>业务填写交易 ID</th><th>转账日期</th><th>付款人名称</th><th>转账币种</th>" +
+        "<th>转账金额</th><th>转账分配</th><th>状态</th><th>转账截图</th><th>内部备注</th><th>预充申请</th><th>预充申请单号</th><th>审批单号</th>" +
         "<th>预充币种</th><th>预充金额</th>" +
         tipHead("客户转账入账币种", "匹配资金流水后的入账币种") +
         tipHead("客户转账入账金额", "匹配资金流水后的入账金额") +
@@ -1801,8 +2372,9 @@
       if (state.page > pages) state.page = pages;
       const start = (state.page - 1) * state.pageSize;
       const slice = all.slice(start, start + state.pageSize);
-      document.getElementById("rows").innerHTML = slice.length ? slice.map(rowHtml).join("") : '<tr><td class="empty" colspan="29">没有符合条件的记录</td></tr>';
+      document.getElementById("rows").innerHTML = slice.length ? slice.map(rowHtml).join("") : '<tr><td class="empty" colspan="31">没有符合条件的记录</td></tr>';
       document.getElementById("pager").innerHTML = pagerHtml(all.length, state.page, pages, state.pageSize, "page", "page-size");
+      updateBatchBar();
     }
 
     function moneyLabel(currency, value) {
@@ -1831,7 +2403,7 @@
     function drawerHtml(row) {
       const figures = drawerFigures(row);
       const fulfill = row.biz === "履约";
-      const approvalNo = row.submitAt.replace(/\D/g, "").slice(0, 12);
+      const approvalNo = approvalNoOf(row) || row.submitAt.replace(/\D/g, "").slice(0, 12);
       const later = plusSeconds(row.submitAt, 2);
       const preAmount = row.prechargeAmount == null ? figures.pre : row.prechargeAmount;
       const preCurrency = row.prechargeCurrency || row.currency;
@@ -1899,6 +2471,216 @@
       renderDrawer();
     }
 
+    function larkCcy(code) {
+      const map = { USD: "美元", EUR: "欧元", GBP: "英镑", HKD: "港币", CNY: "人民币元", CNH: "人民币元" };
+      if (!code) return "-";
+      return map[code] ? code + "-" + map[code] : code;
+    }
+
+    function merchantMail(row) {
+      if (row && row.uniqueId && String(row.uniqueId).indexOf("@") >= 0) return row.uniqueId;
+      const shop = SHOPS.find((item) => item[0] === (row && row.merchantId));
+      return shop ? shop[2] : "-";
+    }
+
+    function rowPrechargeAmt(row) {
+      if (row && Number(row.prechargeAmount) > 0) return row.prechargeAmount;
+      return rowTransferAmt(row);
+    }
+
+    function larkQuota(row) {
+      const seed = Number(String(row && row.merchantId ? row.merchantId : "1").replace(/\D/g, "") || "1");
+      const cap = Math.round((12000 + (mix(seed + 40) % 80000)) * 100) / 100;
+      const used = Math.round(cap * (35 + mix(seed + 41) % 40) / 100 * 100) / 100;
+      const ccy = (row && (row.accountCcy || MERCHANT_ACCOUNT[row.merchantId] || row.currency)) || "USD";
+      return { open: "是", cap: cap, used: used, left: Math.round((cap - used) * 100) / 100, currency: ccy };
+    }
+
+    function larkHistory(row) {
+      const seed = Number(String(row && row.merchantId ? row.merchantId : "1").replace(/\D/g, "") || "1");
+      const total = Math.round((80000 + (mix(seed + 90) % 120000) + (mix(seed + 91) % 100) / 100) * 100) / 100;
+      const unpaid = Math.round(total * (0.28 + (mix(seed + 92) % 20) / 100) * 100) / 100;
+      const ccy = (row && (row.accountCcy || MERCHANT_ACCOUNT[row.merchantId] || row.currency)) || "USD";
+      return { total: total, unpaid: unpaid, currency: ccy };
+    }
+
+    function approvalRowsOf(row) {
+      const no = approvalNoOf(row);
+      if (!row) return [];
+      if (!no) return [row];
+      const list = state.rows.filter((item) => item.precharge === "是" && approvalNoOf(item) === no);
+      return list.length ? list : [row];
+    }
+
+    function openLarkApproval(row) {
+      if (!row) return;
+      state.drawerId = null;
+      renderDrawer();
+      const rows = approvalRowsOf(row);
+      state.dialog = {
+        kind: "lark-approval",
+        rows: rows,
+        approvalNo: approvalNoOf(row) || ""
+      };
+      renderOverlay();
+    }
+
+    function larkQueryMode() {
+      const mode = new URLSearchParams(location.search).get("lark");
+      return mode === "batch" || mode === "single" ? mode : "";
+    }
+
+    function larkDemoRows(mode) {
+      if (mode === "batch") {
+        return ["sc-batch-a", "sc-batch-b"].map((id, index) => {
+          const row = state.rows.find((item) => item.id === id);
+          if (!row) return null;
+          return Object.assign({}, row, {
+            precharge: "是",
+            approvalNo: "AP20261121170001",
+            prechargeNo: "PF202611211700" + String(index + 1).padStart(2, "0"),
+            prechargeAmount: index === 0 ? 1860 : 2400,
+            prechargeCurrency: row.currency,
+            opsGroup: "禾风履约组",
+            prechargeRemark: "客户已完成转账，申请批量预充（同一商户、同一转账币种）。"
+          });
+        }).filter(Boolean);
+      }
+      const row = state.rows.find((item) => item.biz === "履约" && item.precharge === "是" && item.prechargeNo);
+      return row ? [row] : [];
+    }
+
+    function showLarkPage(mode) {
+      const rows = larkDemoRows(mode);
+      document.body.classList.add("lark-page");
+      document.getElementById("app").innerHTML = "";
+      state.dialog = {
+        kind: "lark-approval",
+        rows: rows,
+        approvalNo: rows[0] ? (rows[0].approvalNo || approvalNoOf(rows[0]) || "") : "",
+        page: true
+      };
+      renderOverlay();
+    }
+
+    function larkApprovalRows() {
+      if (state.dialog && state.dialog.rows && state.dialog.rows.length) return state.dialog.rows;
+      const ids = (state.dialog && state.dialog.rowIds) || [];
+      return ids.map((id) => state.rows.find((item) => item.id === id)).filter(Boolean);
+    }
+
+    function larkField(label, value, required) {
+      const star = required === false ? "" : '<i class="req">*</i>';
+      const text = value == null || value === "" ? "-" : value;
+      return '<div class="lark-row"><div class="lark-lab">' + star + esc(label) + '</div><div class="lark-val">' + (typeof text === "string" && text.indexOf("<") === 0 ? text : esc(text)) + "</div></div>";
+    }
+
+    function larkMoneyField(label, ccy, amount) {
+      return '<div class="lark-row"><div class="lark-lab"><i class="req">*</i>' + esc(label) + '</div><div class="lark-money">' +
+        '<div class="lark-val">' + esc(larkCcy(ccy)) + "</div>" +
+        '<div class="lark-val">' + (amount == null || amount === "" ? "-" : money(amount)) + "</div></div></div>";
+    }
+
+    function larkFileChip(name, extra) {
+      if (!name) return "";
+      const image = !/\.pdf$/i.test(name);
+      return '<span class="lark-file"><i class="kind ' + (image ? "img" : "pdf") + '">' + (image ? "图片" : "PDF") + "</i><span>" + esc(extra ? extra + " · " + name : name) + '</span><button type="button" class="link" data-act="lark-file" data-name="' + esc(name) + '">查看</button></span>';
+    }
+
+    function larkAttachList(files) {
+      const chips = files.filter(Boolean).map((item) => {
+        if (typeof item === "string") return larkFileChip(item);
+        return larkFileChip(item.name, item.label);
+      }).join("");
+      return chips ? '<div class="lark-files">' + chips + "</div>" : '<div class="lark-empty">暂无附件</div>';
+    }
+
+    function larkRowFiles(row) {
+      const files = [];
+      if (row && row.voucher) files.push(row.voucher);
+      rowOthers(row).forEach((name) => { if (name && files.indexOf(name) < 0) files.push(name); });
+      (row && row.proofFiles ? row.proofFiles : []).forEach((item) => {
+        const name = typeof item === "string" ? item : item && item.name;
+        if (name && files.indexOf(name) < 0) files.push(name);
+      });
+      return files;
+    }
+
+    function larkAttachField(row) {
+      return '<div class="lark-row lark-row-files"><div class="lark-lab"><i class="req">*</i>附件</div><div>' +
+        larkAttachList(larkRowFiles(row)) + "</div></div>";
+    }
+
+    function larkDocFields(row) {
+      return larkField("预充申请单号", row.prechargeNo || "-") +
+        larkField("交易ID", row.bizTxn || "-") +
+        larkMoneyField("客户转账金额", row.currency, rowTransferAmt(row)) +
+        larkMoneyField("申请预充金额", row.prechargeCurrency || row.currency, rowPrechargeAmt(row)) +
+        larkField("付款人", row.payer || "-") +
+        larkField("提交时间", row.submitAt || "-");
+    }
+
+    function larkNoticeHtml() {
+      return '<div class="lark-note"><div class="ttl">请务必请写明</div><ol>' +
+        "<li>鉴于个别客户存在紧急买货/监管需求，本流程适用于代发业务客户已转账但我方未到账的在途资金。运营部/交付中心业务组根据客户已转账未到账的单笔金额申请对 Fund 系统客户钱包预充值，审批后将自动调整 Fund 系统客户钱包余额。</li>" +
+        "<li>证明材料：申请 USD 500 以上须提供《平台回执》；USD 500 以下须提供《转账记录》，必须涵盖信息：付款方户名；我方收款户名；我方收款账号；转账时间；转账金额。</li>" +
+        "<li>申请须以客户实际转账凭证为依据，禁止以历史转账记录或预计付款发起预充申请。</li>" +
+        "<li>申请人需确保本申请中客户对我方账户已转账金额真实、准确。一旦 3 个工作日内我方账户未收到该笔充值，申请人须承担相关责任。</li>" +
+        '</ol><div style="margin-top:8px"><button type="button" class="link" data-act="legend" data-kind="receipt">点击按钮查看附件示例</button></div></div>';
+    }
+
+    function larkApprovalHtml() {
+      const rows = larkApprovalRows();
+      if (!rows.length) return "";
+      const page = !!(state.dialog && state.dialog.page);
+      const row = rows[0];
+      const batch = rows.length > 1;
+      const quota = larkQuota(row);
+      const history = larkHistory(row);
+      const approvalNo = state.dialog.approvalNo || approvalNoOf(row) || "-";
+      const transferTotal = rows.reduce((sum, item) => sum + Number(rowTransferAmt(item) || 0), 0);
+      const prechargeTotal = rows.reduce((sum, item) => sum + Number(rowPrechargeAmt(item) || 0), 0);
+      const bizBlock = '<div class="lark-sec"><div class="lark-sec-title">运营平台与业务信息</div>' +
+        larkField("运营部业务组", row.opsGroup || "-") +
+        larkField("商户ID", row.merchantId || "-") +
+        larkField("商户名称", row.merchantName || "-") +
+        larkField("商户邮箱", merchantMail(row)) +
+        larkField("子业务", row.biz || "-") + "</div>";
+      const quotaBlock = '<div class="lark-sec"><div class="lark-sec-title">商户信用额度</div>' +
+        larkField("是否开通", quota.open) +
+        larkMoneyField("总额度", quota.currency, quota.cap) +
+        larkMoneyField("已用额度", quota.currency, quota.used) +
+        larkMoneyField("剩余额度", quota.currency, quota.left) + "</div>";
+      const docs = batch
+        ? rows.map((item, index) => '<div class="lark-item"><div class="lark-item-hd"><span><em>' + (index + 1) + "</em> 转账审核单号 " + esc(item.reviewNo) + "</span></div>" + larkDocFields(item) + larkAttachField(item) + "</div>").join("")
+        : larkDocFields(row);
+      const docsBlock = '<div class="lark-sec"><div class="lark-sec-title">转账与预充单据</div>' +
+        (batch
+          ? '<div class="lark-sum"><div class="lark-sum-title">本次批量预充汇总</div><div class="lark-sum-grid">' +
+            '<div class="lark-sum-card"><span>总笔数</span><b>' + rows.length + " 笔</b></div>" +
+            '<div class="lark-sum-card"><span>转账币种</span><b>' + esc(row.currency || "-") + "</b></div>" +
+            '<div class="lark-sum-card"><span>转账合计</span><b>' + esc(moneyLabel(row.currency, transferTotal)) + "</b></div>" +
+            '<div class="lark-sum-card is-precharge"><span>预充合计（本次审批）</span><b>' + esc(moneyLabel(row.prechargeCurrency || row.currency, prechargeTotal)) + "</b></div>" +
+            "</div></div>"
+          : "") +
+        docs + "</div>";
+      const histBlock = '<div class="lark-sec"><div class="lark-sec-title">商户预充历史</div>' +
+        larkMoneyField("预充金额累计", history.currency, history.total) +
+        larkMoneyField("预充金额未还累计", history.currency, history.unpaid) + "</div>";
+      const remarkBlock = '<div class="lark-sec"><div class="lark-sec-title">说明</div>' +
+        larkField("预充备注", row.prechargeRemark || "-") + "</div>";
+      const attachBlock = batch
+        ? ""
+        : '<div class="lark-sec"><div class="lark-sec-title">附件(沟通截图/表格附件)</div>' + larkAttachList(larkRowFiles(row)) + "</div>";
+      return '<div class="mask lark-mask' + (page ? " is-page" : "") + '" id="mask"><div class="lark-sheet' + (batch ? " is-batch" : "") + '" role="dialog" aria-modal="' + (page ? "false" : "true") + '" aria-labelledby="lark-title">' +
+        '<div class="lark-hd"><div><h2 id="lark-title">代发预充申请</h2><div class="lark-meta">' +
+        (batch ? "批量 " + rows.length + " 笔 · " : "单笔 · ") + esc(row.merchantName || "") + " · " + esc(row.currency || "") +
+        " · 审批单号 " + esc(approvalNo) + " · 等待审批</div></div>" +
+        (page ? "" : '<button type="button" class="icon-btn" data-act="close" aria-label="关闭">' + ICONS.close + "</button>") + "</div>" +
+        '<div class="lark-bd">' + bizBlock + quotaBlock + docsBlock + histBlock + remarkBlock + attachBlock + larkNoticeHtml() + "</div>" +
+        (page ? "" : '<div class="lark-ft"><button type="button" class="btn default" data-act="close">关闭</button></div>') + "</div></div>";
+    }
+
     function renderOverlay() {
       const root = document.getElementById("overlay");
       if (!state.dialog) {
@@ -1907,6 +2689,8 @@
       }
       if (state.dialog.kind === "shots") root.innerHTML = shotsHtml();
       else if (state.dialog.kind === "precharge") root.innerHTML = prechargeHtml();
+      else if (state.dialog.kind === "batch-precharge") root.innerHTML = batchPrechargeHtml();
+      else if (state.dialog.kind === "lark-approval") root.innerHTML = larkApprovalHtml();
       else if (state.dialog.kind === "invalidate") root.innerHTML = invalidateHtml();
       else if (state.dialog.kind === "revoke") root.innerHTML = revokeHtml();
       else if (state.dialog.kind === "create") root.innerHTML = createHtml();
@@ -2473,8 +3257,415 @@
     }
 
     function openPrecharge(row) {
-      state.dialog = { kind: "precharge", rowId: row.id, amount: "", remark: "", arrive: "", viewed: false, extraFiles: [], proofFiles: [], group: "", groupQuery: "", groupOpen: false, guideOpen: true, legend: "", errors: {} };
+      state.dialog = {
+        kind: "precharge",
+        rowId: row.id,
+        amount: "",
+        remark: "",
+        arrive: "",
+        viewed: false,
+        voucher: row.voucher || "",
+        voucherKey: row.voucherKey || "",
+        others: rowOthers(row).slice(),
+        extraFiles: [],
+        proofFiles: [],
+        group: "",
+        groupQuery: "",
+        groupOpen: false,
+        guideOpen: true,
+        legend: "",
+        errors: {}
+      };
       renderOverlay();
+    }
+
+    function isPrechargeDialog() {
+      return !!(state.dialog && (state.dialog.kind === "precharge" || state.dialog.kind === "batch-precharge"));
+    }
+
+    function openBatchPrecharge() {
+      const rows = selectedBatchRows();
+      if (rows.length < 2) return showToast("请至少选择 2 条同一商户、同一转账币种的代发可预充单", { warn: true });
+      if (rows.some((row) => !isFulfillBiz(row))) return showToast("批量预充仅支持代发业务，广告请使用行内「预充」。", { warn: true, ms: 4500 });
+      if (rows.length > BATCH_PRECHARGE_MAX) return showToast("单次最多选择 " + BATCH_PRECHARGE_MAX + " 条", { warn: true });
+      const mixed = rows.some((row) => batchGroupKey(row) !== batchGroupKey(rows[0]));
+      if (mixed) return showToast("已选记录不是同一商户、同一转账币种，不能一起批量预充，请分开提交", { warn: true, ms: 4500 });
+      const items = {};
+      rows.forEach((row) => {
+        items[row.id] = emptyBatchItem(row);
+      });
+      state.dialog = {
+        kind: "batch-precharge",
+        rowIds: rows.map((row) => row.id),
+        items: items,
+        remark: "",
+        arrive: "",
+        group: "",
+        groupQuery: "",
+        groupOpen: false,
+        guideOpen: true,
+        legend: "",
+        errors: {},
+        itemErrors: {}
+      };
+      renderOverlay();
+    }
+
+    function batchDialogRows() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return [];
+      return (state.dialog.rowIds || []).map((id) => state.rows.find((row) => row.id === id)).filter(Boolean);
+    }
+
+    function moneyOver(value, cap) {
+      if (cap == null || cap === "") return false;
+      const amount = Number(value);
+      const limit = Number(cap);
+      if (!Number.isFinite(amount) || !Number.isFinite(limit)) return false;
+      return Math.round(amount * 100) > Math.round(limit * 100);
+    }
+
+    function batchOverCapMessage(row) {
+      const cap = rowTransferAmt(row);
+      if (cap == null) return "预充金额不可大于转账金额";
+      return "预充金额不可大于本单转账金额 " + moneyLabel(row.currency || "", cap);
+    }
+
+    function liveBatchAmountError(row, raw) {
+      const value = String(raw || "").trim();
+      if (!value) return "";
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) return "";
+      return moneyOver(value, rowTransferAmt(row)) ? batchOverCapMessage(row) : "";
+    }
+
+    function paintBatchAmountState(input) {
+      if (!input || !state.dialog || state.dialog.kind !== "batch-precharge") return;
+      const row = state.rows.find((item) => item.id === input.dataset.batchAmount);
+      if (!row) return;
+      const msg = liveBatchAmountError(row, input.value);
+      input.setAttribute("aria-invalid", msg ? "true" : "false");
+      const wrap = input.closest(".amount-input");
+      if (wrap) wrap.classList.toggle("bad", !!msg);
+      const field = input.closest(".batch-field");
+      if (field) {
+        let err = field.querySelector(".err");
+        if (msg) {
+          if (!err) {
+            err = document.createElement("p");
+            err.className = "err";
+            field.appendChild(err);
+          }
+          err.textContent = msg;
+        } else if (err) err.remove();
+      }
+      const card = input.closest(".batch-item");
+      if (card) card.classList.toggle("bad", !!card.querySelector(".amount-input.bad, .add-line.bad, .err"));
+      state.dialog.itemErrors = state.dialog.itemErrors || {};
+      const local = state.dialog.itemErrors[row.id] || {};
+      if (msg) local.amount = msg;
+      else delete local.amount;
+      if (local.amount || local.voucher || local.file) state.dialog.itemErrors[row.id] = local;
+      else delete state.dialog.itemErrors[row.id];
+    }
+
+    function refreshBatchAmountErrors() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      state.dialog.itemErrors = state.dialog.itemErrors || {};
+      batchDialogRows().forEach((row) => {
+        const item = state.dialog.items[row.id];
+        const msg = liveBatchAmountError(row, item && item.amount);
+        const local = state.dialog.itemErrors[row.id] || {};
+        if (msg) local.amount = msg;
+        else delete local.amount;
+        if (local.amount || local.voucher || local.file) state.dialog.itemErrors[row.id] = local;
+        else delete state.dialog.itemErrors[row.id];
+      });
+    }
+
+    function batchAmountValue(item) {
+      const amount = Number(String((item && item.amount) || "").trim());
+      return Number.isFinite(amount) && amount > 0 ? amount : 0;
+    }
+
+    function moneyComma(value) {
+      const parts = money(value || 0).split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }
+
+    function batchSummary() {
+      const rows = batchDialogRows();
+      const totals = {};
+      rows.forEach((row) => {
+        const ccy = row.currency || "-";
+        totals[ccy] = (totals[ccy] || 0) + batchAmountValue(batchItemOf(row));
+      });
+      const currencies = Object.keys(totals);
+      const amount = !currencies.length
+        ? "-"
+        : currencies.length === 1
+          ? moneyComma(totals[currencies[0]])
+          : currencies.map((ccy) => moneyLabel(ccy, totals[ccy])).join("、");
+      return {
+        count: rows.length,
+        currency: currencies.length ? currencies.join(" / ") : "-",
+        amount: amount
+      };
+    }
+
+    function batchSummaryHtml() {
+      const summary = batchSummary();
+      return '<span class="batch-summary" id="batch-summary">' +
+        "<span><em>总笔数</em><b>" + summary.count + "</b></span>" +
+        "<span><em>预充币种</em><b>" + esc(summary.currency) + "</b></span>" +
+        "<span><em>预充总金额</em><b>" + esc(summary.amount) + "</b></span></span>";
+    }
+
+    function paintBatchSummary() {
+      const el = document.getElementById("batch-summary");
+      if (!el || !state.dialog || state.dialog.kind !== "batch-precharge") return;
+      const summary = batchSummary();
+      el.innerHTML =
+        "<span><em>总笔数</em><b>" + summary.count + "</b></span>" +
+        "<span><em>预充币种</em><b>" + esc(summary.currency) + "</b></span>" +
+        "<span><em>预充总金额</em><b>" + esc(summary.amount) + "</b></span>";
+    }
+
+    function fillAllBatchAmounts() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      syncBatchPrecharge();
+      const snapshot = {};
+      batchDialogRows().forEach((row) => {
+        const item = state.dialog.items[row.id] || emptyBatchItem(row);
+        snapshot[row.id] = item.amount || "";
+        if (row.transferAmt != null) {
+          if (!state.dialog.items[row.id]) state.dialog.items[row.id] = emptyBatchItem(row);
+          state.dialog.items[row.id].amount = String(row.transferAmt);
+        }
+      });
+      state.dialog.fillSnapshot = snapshot;
+      refreshBatchAmountErrors();
+      rerenderPrecharge();
+    }
+
+    function undoFillAllBatchAmounts() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge" || !state.dialog.fillSnapshot) return;
+      syncBatchPrecharge();
+      const snapshot = state.dialog.fillSnapshot;
+      batchDialogRows().forEach((row) => {
+        if (!state.dialog.items[row.id]) state.dialog.items[row.id] = emptyBatchItem(row);
+        state.dialog.items[row.id].amount = snapshot[row.id] || "";
+      });
+      delete state.dialog.fillSnapshot;
+      refreshBatchAmountErrors();
+      rerenderPrecharge();
+    }
+
+    function syncBatchPrecharge() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      const dialog = state.dialog;
+      const remark = document.getElementById("precharge-remark");
+      const arrive = document.getElementById("precharge-arrive");
+      const group = document.getElementById("precharge-group");
+      if (remark) dialog.remark = remark.value;
+      if (arrive) dialog.arrive = arrive.value;
+      if (group) {
+        dialog.groupQuery = group.value;
+        dialog.group = OPS_GROUPS.indexOf(group.value) >= 0 ? group.value : "";
+      }
+      document.querySelectorAll("[data-batch-amount]").forEach((input) => {
+        const id = input.dataset.batchAmount;
+        if (!dialog.items[id]) dialog.items[id] = { amount: "", voucher: "" };
+        dialog.items[id].amount = input.value;
+      });
+    }
+
+    function emptyBatchItem(row) {
+      return {
+        amount: "",
+        voucher: (row && row.voucher) || "",
+        voucherKey: (row && row.voucherKey) || ""
+      };
+    }
+
+    function batchItemOf(row) {
+      if (!state.dialog || !state.dialog.items) return emptyBatchItem(row);
+      if (!state.dialog.items[row.id]) state.dialog.items[row.id] = emptyBatchItem(row);
+      const item = state.dialog.items[row.id];
+      if (item.voucher === undefined) item.voucher = row.voucher || "";
+      return item;
+    }
+
+    function batchItemHtml(row, index) {
+      const item = batchItemOf(row);
+      const errors = (state.dialog.itemErrors && state.dialog.itemErrors[row.id]) || {};
+      const transfer = rowTransferAmt(row);
+      const cap = transfer == null ? "" : money(transfer);
+      const placeholder = cap ? "不可大于转账金额 " + cap : "请输入预充金额";
+      const transferText = transfer == null ? "-" : moneyLabel(row.currency, transfer);
+      const seq = index + 1;
+      return '<article class="batch-item' + (errors.amount || errors.voucher ? " bad" : "") + '">' +
+        '<span class="batch-index" aria-label="第 ' + seq + ' 条">' + seq + "</span>" +
+        '<div class="batch-item-body">' +
+        '<div class="batch-item-hd"><span class="batch-item-title"><em>转账审核单号</em><strong>' + esc(row.reviewNo) + "</strong></span>" +
+        '<button type="button" class="link" data-act="batch-remove" data-id="' + row.id + '">移除</button></div>' +
+        '<div class="batch-kv"><span><em>商户</em>' + esc(row.merchantName) + "（" + esc(row.merchantId) + "）</span>" +
+        "<span><em>子业务</em>履约</span>" +
+        "<span><em>转账币种</em>" + esc(row.currency || "-") + "</span>" +
+        "<span><em>转账金额</em>" + esc(transferText) + "</span></div>" +
+        '<div class="batch-fields">' +
+        '<div class="batch-field"><span class="batch-field-label"><i class="req">*</i>转账凭证（证明资料）</span>' +
+        '<div class="voucher-merge">' + prechargeVoucherBody(item, errors.voucher, row.id) + "</div></div>" +
+        '<div class="batch-field"><span class="batch-field-label"><i class="req">*</i>预充金额</span>' +
+        '<div class="amount-input' + (errors.amount ? " bad" : "") + '"><input class="control" inputmode="decimal" data-batch-amount="' + row.id + '" placeholder="' + esc(placeholder) + '" aria-label="' + esc(row.reviewNo) + '预充金额"' + (errors.amount ? ' aria-invalid="true"' : "") + ' value="' + esc(item.amount || "") + '"><span>' + esc(row.currency || "币种") + "</span></div>" +
+        (errors.amount ? '<p class="err">' + esc(errors.amount) + "</p>" : "") +
+        "</div></div></div>" +
+        "</article>";
+    }
+
+    function batchPrechargeHtml() {
+      const dialog = state.dialog;
+      const rows = batchDialogRows();
+      const errors = dialog.errors || {};
+      const arrive = dialog.arrive || "";
+      return '<div class="mask" id="mask"><div class="dialog precharge batch" role="dialog" aria-modal="true" aria-labelledby="precharge-title">' +
+        '<div class="dialog-hd"><h2 id="precharge-title">批量预充</h2><button type="button" class="icon-btn" data-act="close" aria-label="关闭">' + ICONS.close + "</button></div>" +
+        '<div class="dialog-bd">' + guideHtml() +
+        '<div class="notice"><i>i</i><span>代发批量预充提交后将发起 <b>一张</b> 飞书审批，生成 ' + rows.length + " 张预充申请单，审批人只需审批一次。</span></div>" +
+        '<p class="batch-note">已选 ' + rows.length + " 条代发转账审核单。业务组、预计到账时间和申请说明整批共用；预充金额和转账凭证按单填写。广告不支持批量预充。</p>" +
+        '<h3 class="section-title">预充申请信息</h3>' +
+        '<div class="form-label"><i class="req">*</i>运营部业务组<span class="hint-tag">可搜索</span></div>' +
+        '<div class="group-search"><input id="precharge-group" class="control' + (errors.group ? " bad" : "") + '" placeholder="输入小组/部门名称搜索" aria-label="运营部业务组" value="' + esc(dialog.groupQuery || "") + '">' +
+        '<span class="search-icon">' + ICONS.search + "</span>" + groupMenuHtml() + "</div>" +
+        (errors.group ? '<p class="err">' + esc(errors.group) + "</p>" : "") +
+        '<div class="amount-pair"><div><div class="form-label">预计到账时间</div>' +
+        '<div class="control range date-field' + (errors.arrive ? " bad" : "") + '" data-act="pick" data-which="precharge-arrive"><span class="range-text' + (arrive ? "" : " placeholder") + '" id="precharge-arrive-label">' + esc(arrive || "请选择预计到账时间") + '</span><button type="button" class="cal" data-act="pick" data-which="precharge-arrive" aria-label="打开日期">' + ICONS.calendar + '</button><input class="proxy" id="precharge-arrive" type="date" min="' + tomorrowValue() + '" aria-label="预计到账时间" value="' + esc(arrive) + '"></div>' +
+        (errors.arrive ? '<p class="err">' + esc(errors.arrive) + "</p>" : "") +
+        "</div><div></div></div>" +
+        '<div class="form-label" style="margin-top:16px"><i class="req">*</i>预充申请说明</div>' +
+        '<div class="void-box precharge-note"><textarea id="precharge-remark" class="control' + (errors.remark ? " bad" : "") + '" maxlength="500" placeholder="此处填写预充申请事由" aria-label="预充申请说明">' + esc(dialog.remark || "") + "</textarea>" +
+        '<span class="void-count" id="precharge-count">' + (dialog.remark || "").length + " / 500</span></div>" +
+        (errors.remark ? '<p class="err">' + esc(errors.remark) + "</p>" : "") +
+        '<div class="batch-detail-hd"><h3 class="section-title">预充明细</h3>' +
+        (dialog.fillSnapshot
+          ? '<button type="button" class="link" data-act="batch-undo-fill">撤销填入</button>'
+          : '<button type="button" class="link" data-act="batch-fill-all">全部按转账金额填入</button>') +
+        "</div>" +
+        '<div class="batch-list">' + rows.map(batchItemHtml).join("") + "</div>" +
+        "</div>" +
+        '<div class="dialog-ft">' + batchSummaryHtml() +
+        '<button type="button" class="btn default" data-act="close">取消</button><button type="button" class="btn primary" data-act="batch-precharge-ok">提交审批</button></div></div></div>' +
+        batchRemoveConfirmHtml();
+    }
+
+    function batchRemoveConfirmHtml() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge" || !state.dialog.removeId) return "";
+      const row = state.rows.find((item) => item.id === state.dialog.removeId);
+      const last = batchDialogRows().length <= 1;
+      const no = row ? row.reviewNo : state.dialog.removeId;
+      return '<div class="mask sub" id="batch-remove-mask"><div class="dialog void" style="width:min(420px,100%)" role="dialog" aria-modal="true" aria-labelledby="batch-remove-title">' +
+        '<div class="dialog-hd"><h2 id="batch-remove-title">二次确认</h2><button type="button" class="icon-btn" data-act="batch-remove-back" aria-label="关闭">' + ICONS.close + "</button></div>" +
+        '<div class="void-body"><p class="hint">确认从本次批量预充中移除转账审核单 ' + esc(no) + "？" +
+        (last ? "这是当前最后一条明细，移除后将关闭批量预充。" : "") + "</p></div>" +
+        '<div class="dialog-ft"><button type="button" class="btn default" data-act="batch-remove-back">取消</button><button type="button" class="btn primary" data-act="batch-remove-ok">确认移除</button></div></div></div>';
+    }
+
+    function askBatchRemove(id) {
+      syncBatchPrecharge();
+      state.dialog.removeId = id;
+      rerenderPrecharge();
+    }
+
+    function closeBatchRemoveConfirm() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      delete state.dialog.removeId;
+      rerenderPrecharge();
+    }
+
+    function confirmBatchRemove() {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      const dropId = state.dialog.removeId;
+      delete state.dialog.removeId;
+      if (!dropId) return rerenderPrecharge();
+      state.dialog.rowIds = (state.dialog.rowIds || []).filter((id) => id !== dropId);
+      if (state.dialog.items) delete state.dialog.items[dropId];
+      delete state.selected[dropId];
+      if (!state.dialog.rowIds.length) {
+        closeDialog();
+        renderRows();
+        return;
+      }
+      rerenderPrecharge();
+    }
+
+    function addBatchVoucher(rowId, list) {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      syncBatchPrecharge();
+      const item = state.dialog.items[rowId];
+      if (!item) return;
+      let picked = null;
+      let extra = 0;
+      Array.from(list || []).forEach((file) => {
+        const parsed = readUploadFile(file);
+        if (!parsed) return;
+        if (picked) extra += 1;
+        else picked = parsed;
+      });
+      if (!picked) return;
+      item.voucher = picked.name;
+      item.voucherKey = fileStem(picked.name);
+      if (state.dialog.itemErrors && state.dialog.itemErrors[rowId]) delete state.dialog.itemErrors[rowId].voucher;
+      if (extra) showToast("转账凭证只能上传 1 个");
+      rerenderPrecharge();
+    }
+
+    function submitBatchPrecharge() {
+      syncBatchPrecharge();
+      const dialog = state.dialog;
+      const rows = batchDialogRows();
+      if (!rows.length) return showToast("请至少保留一条转账审核单");
+      const remark = (dialog.remark || "").trim();
+      const errors = {};
+      const itemErrors = {};
+      if (!dialog.group) errors.group = "请选择运营部业务组";
+      if (!remark) errors.remark = "请填写预充申请事由";
+      if (dialog.arrive && dialog.arrive < tomorrowValue()) errors.arrive = "预计到账时间只能选择今日之后的日期";
+      rows.forEach((row) => {
+        const item = dialog.items[row.id] || emptyBatchItem(row);
+        const local = {};
+        const amount = String(item.amount || "").trim();
+        if (!amount || !/^\d+(\.\d{1,2})?$/.test(amount) || Number(amount) <= 0) local.amount = "请输入预充金额";
+        else if (moneyOver(amount, rowTransferAmt(row))) local.amount = batchOverCapMessage(row);
+        if (!item.voucher) local.voucher = "请上传转账凭证";
+        if (local.amount || local.voucher) itemErrors[row.id] = local;
+      });
+      dialog.errors = errors;
+      dialog.itemErrors = itemErrors;
+      if (errors.group || errors.arrive || errors.remark || Object.keys(itemErrors).length) {
+        renderOverlay();
+        const firstBad = document.querySelector(".batch-item.bad") || document.querySelector(".dialog.precharge .err");
+        if (firstBad) firstBad.scrollIntoView({ block: "nearest" });
+        return;
+      }
+      const approvalNo = "AP" + stamp(0).replace(/\D/g, "").slice(0, 14);
+      rows.forEach((row, index) => {
+        const item = dialog.items[row.id];
+        row.precharge = "是";
+        row.prechargeCurrency = row.currency;
+        row.prechargeAmount = Number(item.amount);
+        row.expectedAt = dialog.arrive;
+        row.prechargeRemark = remark;
+        row.opsGroup = dialog.group;
+        row.voucher = item.voucher;
+        if (item.voucherKey) row.voucherKey = item.voucherKey;
+        row.shots = (item.voucher ? [item.voucher] : []).concat(rowOthers(row));
+        row.approvalNo = approvalNo;
+        row.prechargeNo = "PF" + stamp(0).replace(/\D/g, "").slice(0, 12) + String(20 + index).padStart(2, "0");
+        delete state.selected[row.id];
+      });
+      showToast("已提交审批（" + rows.length + " 张预充申请单，审批单号 " + approvalNo + "）");
+      closeDialog();
+      renderRows();
     }
 
     function tomorrowValue() {
@@ -2522,6 +3713,103 @@
     function attachFiles(names, kind) {
       if (!names.length) return "-";
       return '<div class="file-rows">' + names.map((name, index) => attachFile(name, kind, index)).join("") + "</div>";
+    }
+
+    function fileStem(name) {
+      const base = String(name || "").trim().toLowerCase().split(/[/\\]/).pop();
+      const dot = base.lastIndexOf(".");
+      return dot > 0 ? base.slice(0, dot) : base;
+    }
+
+    function rowTransferAmt(row) {
+      if (!row) return null;
+      if (row.transferAmt != null && row.transferAmt !== "") return row.transferAmt;
+      return row.amount;
+    }
+
+    function prechargeVoucherBody(source, error, rowId) {
+      const name = (source && source.voucher) || "";
+      const idAttr = rowId ? ' data-id="' + esc(rowId) + '"' : "";
+      const input = rowId
+        ? '<input data-batch-voucher="' + esc(rowId) + '" type="file" accept="image/*,.pdf,application/pdf">'
+        : '<input id="precharge-voucher" type="file" accept="image/*,.pdf,application/pdf">';
+      if (name) {
+        const image = !/\.pdf$/i.test(name);
+        return '<div class="file-rows"><div class="file-row"><i class="kind ' + (image ? "img" : "pdf") + '">' + (image ? "图片" : "PDF") + '</i><span class="file-name" title="' + esc(name) + '">' + esc(name) + '</span><span class="file-ops">' +
+          '<button type="button" class="link" data-act="preview-file" data-kind="voucher" data-index="0"' + idAttr + '>查看</button>' +
+          '<label class="link replace-file">替换' + input + "</label></span></div></div>";
+      }
+      return '<label class="add-line' + (error ? " bad" : "") + '">上传' + input + "</label>" +
+        (error ? '<p class="err">' + esc(error) + "</p>" : "");
+    }
+
+    function prechargeOthersBody(source, rowId) {
+      const files = (source && source.others) || [];
+      const idAttr = rowId ? ' data-id="' + esc(rowId) + '"' : "";
+      const rows = files.map((name, index) => {
+        const image = !/\.pdf$/i.test(name);
+        return '<div class="file-row"><i class="kind ' + (image ? "img" : "pdf") + '">' + (image ? "图片" : "PDF") + '</i><span class="file-name" title="' + esc(name) + '">' + esc(name) + '</span><span class="file-ops">' +
+          '<button type="button" class="link" data-act="preview-file" data-kind="other" data-index="' + index + '"' + idAttr + '>查看</button>' +
+          '<button type="button" class="link" data-act="precharge-other-remove" data-index="' + index + '"' + idAttr + '>删除</button></span></div>';
+      }).join("");
+      const input = rowId
+        ? '<input data-batch-others="' + esc(rowId) + '" type="file" accept="image/*,.pdf,application/pdf" multiple>'
+        : '<input id="precharge-others" type="file" accept="image/*,.pdf,application/pdf" multiple>';
+      const add = files.length >= 3 ? "" : '<label class="add-line">上传' + input + "</label>";
+      return '<div class="voucher-merge">' +
+        (rows ? '<div class="file-rows">' + rows + "</div>" : "") +
+        add +
+        '<p class="attach-tip">图片或 PDF，最多 3 个，单个 20M 内。</p></div>';
+    }
+
+    function editablePrechargeAttachRow(withTip) {
+      const errors = (state.dialog && state.dialog.errors) || {};
+      const tip = withTip
+        ? '<p class="attach-tip">USD 500 以上提供《平台回执》，USD 500 以下提供《转账记录》。<button type="button" class="link" data-act="guide-open">查看填写说明</button></p>'
+        : "";
+      return '<tr class="attach-split"><th>转账凭证（证明资料）</th><td colspan="3"><div class="voucher-merge">' + prechargeVoucherBody(state.dialog, errors.voucher) + tip + "</div></td></tr>" +
+        '<tr class="attach-split"><th>其它转账附件</th><td colspan="3">' + prechargeOthersBody(state.dialog) + "</td></tr>";
+    }
+
+    function addPrechargeVoucher(list) {
+      if (!state.dialog || state.dialog.kind !== "precharge") return;
+      syncPrecharge();
+      const dialog = state.dialog;
+      let picked = null;
+      let extra = 0;
+      Array.from(list || []).forEach((file) => {
+        const item = readUploadFile(file);
+        if (!item) return;
+        if (picked) extra += 1;
+        else picked = item;
+      });
+      if (!picked) return;
+      dialog.voucher = picked.name;
+      dialog.voucherKey = fileStem(picked.name);
+      dialog.viewed = false;
+      if (dialog.errors) delete dialog.errors.voucher;
+      if (extra) showToast("转账凭证只能上传 1 个");
+      rerenderPrecharge();
+    }
+
+    function addPrechargeOthers(list) {
+      if (!state.dialog || state.dialog.kind !== "precharge") return;
+      syncPrecharge();
+      const dialog = state.dialog;
+      const next = (dialog.others || []).slice();
+      let overflow = false;
+      Array.from(list || []).forEach((file) => {
+        const item = readUploadFile(file);
+        if (!item) return;
+        if (next.length >= 3) {
+          overflow = true;
+          return;
+        }
+        next.push(item.name);
+      });
+      dialog.others = next;
+      if (overflow) showToast("其它转账附件最多 3 个");
+      rerenderPrecharge();
     }
 
     function rowAccountCcy(row) {
@@ -2672,7 +3960,9 @@
     function fulfillPrechargeHtml(row) {
       const dialog = state.dialog;
       const errors = dialog.errors || {};
-      const cap = row.transferAmt == null ? "" : moneyLabel(row.currency, row.transferAmt);
+      const transfer = rowTransferAmt(row);
+      const amount = transfer == null ? "-" : money(transfer);
+      const cap = transfer == null ? "" : money(transfer);
       const biz = "fulfill";
       const placeholder = cap ? "请输入预充金额，不可大于转账金额 " + cap : "请输入预充金额";
       return '<div class="mask" id="mask"><div class="dialog precharge" role="dialog" aria-modal="true" aria-labelledby="precharge-title">' +
@@ -2682,8 +3972,8 @@
         '<table class="sheet"><tbody>' +
         "<tr><th>商户ID</th><td>" + esc(row.merchantId) + "</td><th>商户邮箱</th><td>" + esc(row.uniqueId) + "</td></tr>" +
         "<tr><th>商户名称</th><td>" + esc(row.merchantName) + "</td><th>子业务</th><td>" + biz + "</td></tr>" +
-        prechargeCustomerAmountRows(row) +
-        prechargeAttachRow() +
+        "<tr><th>转账币种</th><td>" + esc(row.currency) + "</td><th>转账金额</th><td>" + esc(amount) + "</td></tr>" +
+        editablePrechargeAttachRow(true) +
         "</tbody></table>" +
         '<div class="notice"><i>i</i><span>履约业务预充提交后将发起飞书审批，请等待审批结果。</span></div>' +
         '<h3 class="section-title">预充申请信息</h3>' +
@@ -2692,13 +3982,12 @@
         '<span class="search-icon">' + ICONS.search + "</span>" + groupMenuHtml() + "</div>" +
         (errors.group ? '<p class="err">' + esc(errors.group) + "</p>" : "") +
         prechargeAmountPair(placeholder) +
-        proofHtml() +
         '<div class="form-label" style="margin-top:16px"><i class="req">*</i>预充申请说明</div>' +
         '<div class="void-box precharge-note"><textarea id="precharge-remark" class="control' + (errors.remark ? " bad" : "") + '" maxlength="500" placeholder="此处填写预充申请事由" aria-label="预充申请说明">' + esc(dialog.remark || "") + "</textarea>" +
         '<span class="void-count" id="precharge-count">' + (dialog.remark || "").length + " / 500</span></div>" +
         (errors.remark ? '<p class="err">' + esc(errors.remark) + "</p>" : "") +
         "</div>" +
-        '<div class="dialog-ft precharge-ft"><span class="precharge-hint">请先查看预览一次文件，尽量确保客户已经转账。</span>' +
+        '<div class="dialog-ft precharge-ft"><span class="precharge-hint">请先查看预览一次转账凭证，尽量确保客户已经转账且符合预充材料要求。</span>' +
         '<button type="button" class="btn default" data-act="close">取消</button><button type="button" class="btn primary" data-act="precharge-ok">提交审批</button></div></div></div>';
     }
 
@@ -2776,20 +4065,18 @@
       const errors = {};
       if (fulfill && !dialog.group) errors.group = "请选择运营部业务组";
       if (!amount || !/^\d+(\.\d{1,2})?$/.test(amount) || Number(amount) <= 0) errors.amount = "请输入预充金额";
-      else if (fulfill && row.transferAmt != null && Number(amount) > Number(row.transferAmt)) errors.amount = "预充金额不可大于转账金额";
+      else if (fulfill && rowTransferAmt(row) != null && Number(amount) > Number(rowTransferAmt(row))) errors.amount = "预充金额不可大于转账金额";
       if (!remark) errors.remark = fulfill ? "请填写预充申请事由" : "请输入备注信息";
       if (dialog.arrive && dialog.arrive < tomorrowValue()) errors.arrive = "预计到账时间只能选择今日之后的日期";
-      if (fulfill && !(dialog.proofFiles || []).length) errors.proof = "请上传预充证明资料";
-      else if (fulfill) {
-        const duplicate = duplicateProof(dialog.proofFiles, row.id);
-        if (duplicate) errors.proof = "预充证明资料「" + duplicate + "」已存在，请勿重复提交";
+      if (fulfill) {
+        if (!dialog.voucher) errors.voucher = "请上传转账凭证";
+        else if (!dialog.viewed) errors.file = "请先查看预览一次转账凭证，尽量确保客户已经转账且符合预充材料要求。";
+      } else if (!dialog.viewed) {
+        errors.file = "请先查看预览一次文件，尽量确保客户已经转账。";
       }
-      if (!dialog.viewed) errors.file = "请先查看预览一次文件，尽量确保客户已经转账。";
       dialog.errors = errors;
-      if (errors.group || errors.amount || errors.arrive || errors.remark || errors.proof || errors.file) {
+      if (errors.group || errors.amount || errors.arrive || errors.remark || errors.voucher || errors.file) {
         renderOverlay();
-        const zone = document.getElementById("proof-zone");
-        if (errors.proof && zone) zone.scrollIntoView({ block: "nearest" });
         return;
       }
       const index = Number(row.id.slice(2)) - 1;
@@ -2804,7 +4091,11 @@
       }
       if (fulfill) {
         row.opsGroup = dialog.group;
-        row.proofFiles = (dialog.proofFiles || []).map((file) => file.name);
+        row.voucher = dialog.voucher;
+        if (dialog.voucherKey) row.voucherKey = dialog.voucherKey;
+        row.others = (dialog.others || []).slice();
+        row.shots = (dialog.voucher ? [dialog.voucher] : []).concat(row.others);
+        row.approvalNo = "AP" + row.submitAt.replace(/\D/g, "").slice(0, 14);
       }
       showToast(fulfill ? "已提交审批（演示）" : "已提交预充（演示）");
       closeDialog();
@@ -2849,6 +4140,7 @@
     function resetList() {
       state.draft = emptyQuery();
       state.applied = emptyQuery();
+      state.selected = {};
       state.page = 1;
       document.querySelectorAll("[data-q]").forEach((el) => {
         el.value = "";
@@ -3265,12 +4557,17 @@
     }
 
     let toastTimer = 0;
-    function showToast(message) {
+    function showToast(message, opts) {
       const el = document.getElementById("toast");
-      el.innerHTML = '<span class="toast-dot"></span><span>' + esc(message) + "</span>";
-      el.classList.add("show");
+      const warn = !!(opts && opts.warn);
+      const center = warn || !!(opts && opts.center);
+      const ms = opts && opts.ms ? opts.ms : warn ? 4000 : 2200;
+      const tip = document.getElementById("hover-tip");
+      if (tip) tip.hidden = true;
+      el.className = "show" + (center ? " center" : "");
+      el.innerHTML = '<span class="toast-dot' + (warn ? " warn" : "") + '"></span><span>' + esc(message) + "</span>";
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+      toastTimer = setTimeout(() => { el.className = ""; }, ms);
     }
 
     function pickFlow(id) {
@@ -3311,6 +4608,28 @@
         rerenderCreate();
         return;
       }
+      if (act === "batch-precharge") return openBatchPrecharge();
+      if (act === "batch-precharge-ok") return submitBatchPrecharge();
+      if (act === "batch-fill-all" && state.dialog && state.dialog.kind === "batch-precharge") {
+        fillAllBatchAmounts();
+        return;
+      }
+      if (act === "batch-undo-fill" && state.dialog && state.dialog.kind === "batch-precharge") {
+        undoFillAllBatchAmounts();
+        return;
+      }
+      if (act === "batch-remove" && state.dialog && state.dialog.kind === "batch-precharge") {
+        askBatchRemove(button.dataset.id);
+        return;
+      }
+      if (act === "batch-remove-back" && state.dialog && state.dialog.kind === "batch-precharge") {
+        closeBatchRemoveConfirm();
+        return;
+      }
+      if (act === "batch-remove-ok" && state.dialog && state.dialog.kind === "batch-precharge") {
+        confirmBatchRemove();
+        return;
+      }
       if (act === "export") return showToast("演示页不导出敏感字段");
       if (act === "palette") return showToast("演示页未开放全局搜索");
       if (act === "bell") return showToast("没有新通知");
@@ -3325,14 +4644,18 @@
         return;
       }
       const row = state.rows.find((item) => item.id === button.dataset.id);
+      if (act === "lark-file") {
+        state.shotName = button.dataset.name || "";
+        return openPdf();
+      }
       if (act === "precharge-open" && row) return openDrawer(row);
       if (act === "precharge-form" && row && row.status === "已匹配" && !row.allocated) return openPrecharge(row);
       if (act === "precharge-ok") return submitPrecharge();
-      if (act === "guide-toggle" && state.dialog && state.dialog.kind === "precharge") return setGuide(!state.dialog.guideOpen);
-      if (act === "guide-open" && state.dialog && state.dialog.kind === "precharge") return setGuide(true);
-      if (act === "legend" && state.dialog && state.dialog.kind === "precharge") return openLegend(button.dataset.kind);
+      if (act === "guide-toggle" && isPrechargeDialog()) return setGuide(!state.dialog.guideOpen);
+      if (act === "guide-open" && isPrechargeDialog()) return setGuide(true);
+      if (act === "legend" && (isPrechargeDialog() || (state.dialog && state.dialog.kind === "lark-approval"))) return openLegend(button.dataset.kind);
       if (act === "close-legend") return closeLegend();
-      if (act === "group-pick" && state.dialog && state.dialog.kind === "precharge") {
+      if (act === "group-pick" && isPrechargeDialog()) {
         state.dialog.group = button.dataset.name;
         state.dialog.groupQuery = button.dataset.name;
         state.dialog.groupOpen = false;
@@ -3413,29 +4736,53 @@
         state.dialog.previewName = files[Number(button.dataset.index)] || "";
         return openPdf();
       }
+      if (act === "precharge-other-remove" && state.dialog && state.dialog.kind === "precharge") {
+        syncPrecharge();
+        (state.dialog.others || []).splice(Number(button.dataset.index), 1);
+        return rerenderPrecharge();
+      }
       if (act === "preview-file") {
         state.shotName = "";
+        if (state.dialog && state.dialog.kind === "batch-precharge") {
+          const item = (button.dataset.id && state.dialog.items[button.dataset.id]) || {};
+          state.dialog.previewName = item.voucher || "";
+          return openPdf();
+        }
         const current = currentRow();
         if (state.dialog && (state.dialog.kind === "precharge" || state.dialog.kind === "match")) {
           if (button.dataset.kind === "other") {
-            const files = rowOthers(current);
+            const files = state.dialog.kind === "precharge" ? (state.dialog.others || []) : rowOthers(current);
             state.dialog.previewName = files[Number(button.dataset.index)] || "";
           } else {
-            if (state.dialog.kind === "precharge") state.dialog.viewed = true;
-            state.dialog.previewName = current ? current.voucher : "";
+            if (state.dialog.kind === "precharge") {
+              state.dialog.viewed = true;
+              state.dialog.previewName = state.dialog.voucher || (current ? current.voucher : "");
+            } else state.dialog.previewName = current ? current.voucher : "";
           }
         } else if (state.dialog) state.dialog.previewName = "";
         return openPdf();
       }
-      if (act === "proof-preview" && state.dialog && state.dialog.kind === "precharge") {
-        const file = (state.dialog.proofFiles || [])[Number(button.dataset.index)];
+      if (act === "proof-preview" && isPrechargeDialog()) {
         state.shotName = "";
-        state.dialog.previewName = file ? file.name : "";
+        if (state.dialog.kind === "batch-precharge") {
+          const item = state.dialog.items[button.dataset.id] || {};
+          const file = (item.proofFiles || [])[Number(button.dataset.index)];
+          state.dialog.previewName = file ? file.name : "";
+        } else {
+          const file = (state.dialog.proofFiles || [])[Number(button.dataset.index)];
+          state.dialog.previewName = file ? file.name : "";
+        }
         return openPdf();
       }
-      if (act === "proof-remove" && state.dialog && state.dialog.kind === "precharge") {
-        syncPrecharge();
-        state.dialog.proofFiles.splice(Number(button.dataset.index), 1);
+      if (act === "proof-remove" && isPrechargeDialog()) {
+        if (state.dialog.kind === "batch-precharge") {
+          syncBatchPrecharge();
+          const item = state.dialog.items[button.dataset.id];
+          if (item && item.proofFiles) item.proofFiles.splice(Number(button.dataset.index), 1);
+        } else {
+          syncPrecharge();
+          state.dialog.proofFiles.splice(Number(button.dataset.index), 1);
+        }
         rerenderPrecharge();
         return;
       }
@@ -3459,8 +4806,12 @@
       if (act === "close-pdf") return closePdf();
     }
 
-    document.getElementById("app").innerHTML = shell();
-    renderRows();
+    const larkMode = larkQueryMode();
+    if (larkMode) showLarkPage(larkMode);
+    else {
+      document.getElementById("app").innerHTML = shell();
+      renderRows();
+    }
     const hoverTip = document.createElement("div");
     hoverTip.id = "hover-tip";
     hoverTip.hidden = true;
@@ -3501,10 +4852,14 @@
         renderOverlay();
         return;
       }
+      if (event.target.id === "batch-remove-mask") return closeBatchRemoveConfirm();
       if (event.target.id === "expect-mask") return closeMatchExpectDialog();
       if (event.target.id === "credit-mask") return closeMatchCreditDialog();
       if (event.target.id === "match-ok-mask") return closeMatchOkConfirm();
-      if (event.target.id === "mask") return closeDialog();
+      if (event.target.id === "mask") {
+        if (state.dialog && state.dialog.page) return;
+        return closeDialog();
+      }
       const flowRow = event.target.closest("tr[data-flow-row]");
       if (flowRow && event.target.tagName !== "INPUT") return pickFlow(flowRow.dataset.flowRow);
       const flowPage = event.target.closest("[data-fpage]");
@@ -3520,7 +4875,7 @@
         renderRows();
         return;
       }
-      if (state.dialog && state.dialog.kind === "precharge" && state.dialog.groupOpen && !event.target.closest(".group-search")) {
+      if (isPrechargeDialog() && state.dialog.groupOpen && !event.target.closest(".group-search")) {
         state.dialog.groupOpen = false;
         const menu = document.getElementById("group-menu");
         if (menu) menu.hidden = true;
@@ -3545,6 +4900,13 @@
         state.page = 1;
         renderRows();
       }
+      if (target.dataset.batch === "row") {
+        const ok = toggleBatchRow(target.dataset.id, target.checked);
+        if (!ok) target.checked = false;
+        else renderRows();
+        return;
+      }
+      if (target.dataset.batch === "page") return toggleBatchPage(target.checked);
       if (target.dataset.flow) return pickFlow(target.dataset.flow);
       if (target.name === "create-biz" && state.dialog && state.dialog.kind === "create") {
         syncCreate();
@@ -3569,7 +4931,7 @@
         if (state.dialog.form.errors[key]) delete state.dialog.form.errors[key];
         renderOverlay();
       }
-      if (target.id === "precharge-arrive" && state.dialog && state.dialog.kind === "precharge") {
+      if (target.id === "precharge-arrive" && isPrechargeDialog()) {
         state.dialog.arrive = target.value;
         const label = document.getElementById("precharge-arrive-label");
         if (label) {
@@ -3593,6 +4955,18 @@
         addCreateExtras(target.files);
         target.value = "";
       }
+      if (target.id === "precharge-voucher") {
+        addPrechargeVoucher(target.files);
+        target.value = "";
+      }
+      if (target.id === "precharge-others") {
+        addPrechargeOthers(target.files);
+        target.value = "";
+      }
+      if (target.dataset.batchVoucher && state.dialog && state.dialog.kind === "batch-precharge") {
+        addBatchVoucher(target.dataset.batchVoucher, target.files);
+        target.value = "";
+      }
       if (target.id === "precharge-proof") {
         addProofFiles(target.files);
         target.value = "";
@@ -3611,7 +4985,7 @@
     });
 
     document.addEventListener("focusin", (event) => {
-      if (event.target.id !== "precharge-group" || !state.dialog || state.dialog.kind !== "precharge") return;
+      if (event.target.id !== "precharge-group" || !isPrechargeDialog()) return;
       state.dialog.groupOpen = true;
       const menu = document.getElementById("group-menu");
       if (menu) menu.hidden = false;
@@ -3639,7 +5013,7 @@
           if (error) error.remove();
         }
       }
-      if (target.id === "precharge-group" && state.dialog && state.dialog.kind === "precharge") {
+      if (target.id === "precharge-group" && isPrechargeDialog()) {
         state.dialog.groupQuery = target.value;
         state.dialog.group = OPS_GROUPS.indexOf(target.value) >= 0 ? target.value : "";
         state.dialog.groupOpen = true;
@@ -3687,7 +5061,14 @@
       if (target.id === "precharge-amount" && state.dialog && state.dialog.kind === "precharge") {
         state.dialog.amount = target.value;
       }
-      if (target.id === "precharge-remark" && state.dialog && state.dialog.kind === "precharge") {
+      if (target.dataset.batchAmount && state.dialog && state.dialog.kind === "batch-precharge") {
+        const id = target.dataset.batchAmount;
+        if (!state.dialog.items[id]) state.dialog.items[id] = { amount: "", voucher: "" };
+        state.dialog.items[id].amount = target.value;
+        paintBatchSummary();
+        paintBatchAmountState(target);
+      }
+      if (target.id === "precharge-remark" && isPrechargeDialog()) {
         if (target.value.length > 500) target.value = target.value.slice(0, 500);
         state.dialog.remark = target.value;
         const count = document.getElementById("precharge-count");
@@ -3724,6 +5105,13 @@
           addProofFiles(event.clipboardData.files);
         }
       }
+      if (state.dialog.kind === "batch-precharge") {
+        const voucherInput = event.target.closest && event.target.closest("[data-batch-voucher]");
+        if (voucherInput) {
+          event.preventDefault();
+          addBatchVoucher(voucherInput.getAttribute("data-batch-voucher"), event.clipboardData.files);
+        }
+      }
     });
 
     window.addEventListener("message", (event) => {
@@ -3749,7 +5137,12 @@
           renderOverlay();
           return;
         }
+        if (state.dialog && state.dialog.kind === "batch-precharge" && state.dialog.removeId) {
+          closeBatchRemoveConfirm();
+          return;
+        }
         if (state.drawerId) return closeDrawer();
+        if (state.dialog && state.dialog.page) return;
         if (state.dialog) return closeDialog();
       }
       if (event.key === "Enter" && event.target.dataset && event.target.dataset.q) {
