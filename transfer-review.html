@@ -235,11 +235,17 @@
     .batch-kv em { font-style: normal; color: rgba(0, 0, 0, 0.45); white-space: nowrap; }
     .batch-fields { display: flex; flex-direction: column; gap: 8px; }
     .batch-field { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+    .batch-field-attach { align-items: flex-start; }
+    .batch-field-attach .batch-field-label { padding-top: 6px; }
     .batch-field-label { flex: none; width: 148px; color: rgba(0, 0, 0, 0.88); white-space: nowrap; }
     .batch-field .voucher-merge { flex: 1; min-width: 0; margin: 0; }
+    .batch-field .voucher-merge.others-inline { gap: 6px; }
     .batch-field .file-rows { min-width: 0; }
     .batch-field .file-row { min-height: 32px; padding: 0 10px; background: #fff; }
     .batch-field .add-line { margin: 0; }
+    .batch-field .others-add { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .batch-field .others-add .add-line { height: 28px; padding: 0 10px; flex: none; }
+    .batch-field .others-add .attach-tip { margin: 0; font-size: 12px; line-height: 20px; color: rgba(0, 0, 0, 0.45); white-space: nowrap; }
     .batch-field .amount-input { flex: 1; min-width: 180px; max-width: 320px; background: #fff; }
     .batch-field .amount-input input { text-align: right; }
     .batch-field .err { flex: 1 1 100%; margin: 0 0 0 156px; }
@@ -3475,7 +3481,10 @@
       }
       document.querySelectorAll("[data-batch-amount]").forEach((input) => {
         const id = input.dataset.batchAmount;
-        if (!dialog.items[id]) dialog.items[id] = { amount: "", voucher: "" };
+        if (!dialog.items[id]) {
+          const row = state.rows.find((item) => item.id === id);
+          dialog.items[id] = emptyBatchItem(row);
+        }
         dialog.items[id].amount = input.value;
       });
     }
@@ -3484,7 +3493,8 @@
       return {
         amount: "",
         voucher: (row && row.voucher) || "",
-        voucherKey: (row && row.voucherKey) || ""
+        voucherKey: (row && row.voucherKey) || "",
+        others: row ? rowOthers(row).slice() : []
       };
     }
 
@@ -3493,6 +3503,7 @@
       if (!state.dialog.items[row.id]) state.dialog.items[row.id] = emptyBatchItem(row);
       const item = state.dialog.items[row.id];
       if (item.voucher === undefined) item.voucher = row.voucher || "";
+      if (!Array.isArray(item.others)) item.others = rowOthers(row).slice();
       return item;
     }
 
@@ -3514,8 +3525,10 @@
         "<span><em>转账币种</em>" + esc(row.currency || "-") + "</span>" +
         "<span><em>转账金额</em>" + esc(transferText) + "</span></div>" +
         '<div class="batch-fields">' +
-        '<div class="batch-field"><span class="batch-field-label"><i class="req">*</i>转账凭证（证明资料）</span>' +
+        '<div class="batch-field batch-field-attach"><span class="batch-field-label"><i class="req">*</i>转账凭证（证明资料）</span>' +
         '<div class="voucher-merge">' + prechargeVoucherBody(item, errors.voucher, row.id) + "</div></div>" +
+        '<div class="batch-field batch-field-attach"><span class="batch-field-label">其它转账附件</span>' +
+        prechargeOthersBody(item, row.id) + "</div>" +
         '<div class="batch-field"><span class="batch-field-label"><i class="req">*</i>预充金额</span>' +
         '<div class="amount-input' + (errors.amount ? " bad" : "") + '"><input class="control" inputmode="decimal" data-batch-amount="' + row.id + '" placeholder="' + esc(placeholder) + '" aria-label="' + esc(row.reviewNo) + '预充金额"' + (errors.amount ? ' aria-invalid="true"' : "") + ' value="' + esc(item.amount || "") + '"><span>' + esc(row.currency || "币种") + "</span></div>" +
         (errors.amount ? '<p class="err">' + esc(errors.amount) + "</p>" : "") +
@@ -3532,7 +3545,7 @@
         '<div class="dialog-hd"><h2 id="precharge-title">批量预充</h2><button type="button" class="icon-btn" data-act="close" aria-label="关闭">' + ICONS.close + "</button></div>" +
         '<div class="dialog-bd">' + guideHtml() +
         '<div class="notice"><i>i</i><span>代发批量预充提交后将发起 <b>一张</b> 飞书审批，生成 ' + rows.length + " 张预充申请单，审批人只需审批一次。</span></div>" +
-        '<p class="batch-note">已选 ' + rows.length + " 条代发转账审核单。业务组、预计到账时间和申请说明整批共用；预充金额和转账凭证按单填写。广告不支持批量预充。</p>" +
+        '<p class="batch-note">已选 ' + rows.length + " 条代发转账审核单。业务组、预计到账时间和申请说明整批共用；预充金额、转账凭证和其它附件按单填写。广告不支持批量预充。</p>" +
         '<h3 class="section-title">预充申请信息</h3>' +
         '<div class="form-label"><i class="req">*</i>运营部业务组<span class="hint-tag">可搜索</span></div>' +
         '<div class="group-search"><input id="precharge-group" class="control' + (errors.group ? " bad" : "") + '" placeholder="输入小组/部门名称搜索" aria-label="运营部业务组" value="' + esc(dialog.groupQuery || "") + '">' +
@@ -3619,6 +3632,28 @@
       rerenderPrecharge();
     }
 
+    function addBatchOthers(rowId, list) {
+      if (!state.dialog || state.dialog.kind !== "batch-precharge") return;
+      syncBatchPrecharge();
+      const item = state.dialog.items[rowId];
+      if (!item) return;
+      if (!Array.isArray(item.others)) item.others = [];
+      const next = item.others.slice();
+      let overflow = false;
+      Array.from(list || []).forEach((file) => {
+        const parsed = readUploadFile(file);
+        if (!parsed) return;
+        if (next.length >= 3) {
+          overflow = true;
+          return;
+        }
+        next.push(parsed.name);
+      });
+      item.others = next;
+      if (overflow) showToast("其它转账附件最多 3 个");
+      rerenderPrecharge();
+    }
+
     function submitBatchPrecharge() {
       syncBatchPrecharge();
       const dialog = state.dialog;
@@ -3658,7 +3693,8 @@
         row.opsGroup = dialog.group;
         row.voucher = item.voucher;
         if (item.voucherKey) row.voucherKey = item.voucherKey;
-        row.shots = (item.voucher ? [item.voucher] : []).concat(rowOthers(row));
+        row.others = (item.others || []).slice();
+        row.shots = (item.voucher ? [item.voucher] : []).concat(row.others);
         row.approvalNo = approvalNo;
         row.prechargeNo = "PF" + stamp(0).replace(/\D/g, "").slice(0, 12) + String(20 + index).padStart(2, "0");
         delete state.selected[row.id];
@@ -3756,10 +3792,16 @@
         ? '<input data-batch-others="' + esc(rowId) + '" type="file" accept="image/*,.pdf,application/pdf" multiple>'
         : '<input id="precharge-others" type="file" accept="image/*,.pdf,application/pdf" multiple>';
       const add = files.length >= 3 ? "" : '<label class="add-line">上传' + input + "</label>";
+      const tip = '<p class="attach-tip">图片或 PDF，最多 3 个，单个 20M 内。</p>';
+      if (rowId) {
+        const action = files.length >= 3 ? "" : '<div class="others-add">' + add + tip + "</div>";
+        return '<div class="voucher-merge others-inline">' +
+          (rows ? '<div class="file-rows">' + rows + "</div>" : "") +
+          action + "</div>";
+      }
       return '<div class="voucher-merge">' +
         (rows ? '<div class="file-rows">' + rows + "</div>" : "") +
-        add +
-        '<p class="attach-tip">图片或 PDF，最多 3 个，单个 20M 内。</p></div>';
+        add + tip + "</div>";
     }
 
     function editablePrechargeAttachRow(withTip) {
@@ -4736,16 +4778,27 @@
         state.dialog.previewName = files[Number(button.dataset.index)] || "";
         return openPdf();
       }
-      if (act === "precharge-other-remove" && state.dialog && state.dialog.kind === "precharge") {
-        syncPrecharge();
-        (state.dialog.others || []).splice(Number(button.dataset.index), 1);
+      if (act === "precharge-other-remove" && isPrechargeDialog()) {
+        if (state.dialog.kind === "batch-precharge") {
+          syncBatchPrecharge();
+          const item = button.dataset.id && state.dialog.items[button.dataset.id];
+          if (item && Array.isArray(item.others)) item.others.splice(Number(button.dataset.index), 1);
+        } else {
+          syncPrecharge();
+          (state.dialog.others || []).splice(Number(button.dataset.index), 1);
+        }
         return rerenderPrecharge();
       }
       if (act === "preview-file") {
         state.shotName = "";
         if (state.dialog && state.dialog.kind === "batch-precharge") {
           const item = (button.dataset.id && state.dialog.items[button.dataset.id]) || {};
-          state.dialog.previewName = item.voucher || "";
+          if (button.dataset.kind === "other") {
+            const files = item.others || [];
+            state.dialog.previewName = files[Number(button.dataset.index)] || "";
+          } else {
+            state.dialog.previewName = item.voucher || "";
+          }
           return openPdf();
         }
         const current = currentRow();
@@ -4967,6 +5020,10 @@
         addBatchVoucher(target.dataset.batchVoucher, target.files);
         target.value = "";
       }
+      if (target.dataset.batchOthers && state.dialog && state.dialog.kind === "batch-precharge") {
+        addBatchOthers(target.dataset.batchOthers, target.files);
+        target.value = "";
+      }
       if (target.id === "precharge-proof") {
         addProofFiles(target.files);
         target.value = "";
@@ -5063,7 +5120,10 @@
       }
       if (target.dataset.batchAmount && state.dialog && state.dialog.kind === "batch-precharge") {
         const id = target.dataset.batchAmount;
-        if (!state.dialog.items[id]) state.dialog.items[id] = { amount: "", voucher: "" };
+        if (!state.dialog.items[id]) {
+          const row = state.rows.find((item) => item.id === id);
+          state.dialog.items[id] = emptyBatchItem(row);
+        }
         state.dialog.items[id].amount = target.value;
         paintBatchSummary();
         paintBatchAmountState(target);
@@ -5106,8 +5166,12 @@
         }
       }
       if (state.dialog.kind === "batch-precharge") {
+        const othersInput = event.target.closest && event.target.closest("[data-batch-others]");
         const voucherInput = event.target.closest && event.target.closest("[data-batch-voucher]");
-        if (voucherInput) {
+        if (othersInput) {
+          event.preventDefault();
+          addBatchOthers(othersInput.getAttribute("data-batch-others"), event.clipboardData.files);
+        } else if (voucherInput) {
           event.preventDefault();
           addBatchVoucher(voucherInput.getAttribute("data-batch-voucher"), event.clipboardData.files);
         }

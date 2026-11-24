@@ -1832,12 +1832,12 @@ function renderBiz() {
 }
 
 function renderAudit() {
-  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v195" title="转账审核"></iframe>';
+  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v197" title="转账审核"></iframe>';
 }
 
 function renderLarkApproval(mode) {
   const title = mode === "batch" ? "代发预充申请（批量）" : "代发预充申请（单笔）";
-  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v195&lark=' + encodeURIComponent(mode) + '" title="' + title + '"></iframe>';
+  $("app").innerHTML = '<iframe class="audit-frame" src="transfer-review.html?v=v197&lark=' + encodeURIComponent(mode) + '" title="' + title + '"></iframe>';
 }
 
 function renderTrack() {
